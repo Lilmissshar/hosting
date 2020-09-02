@@ -2,8 +2,7 @@
   <div class="container">
     <div class="navbar-wrapper">
       <a class="navbar-brand" href="{{ route('admin.login.show') }}" style="color: #dfdfdf">
-				{{-- You Can change this to the logo of the project --}}
-				The Techy Hub
+				Capstone Project
       </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar burger-lines"></span>

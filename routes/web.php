@@ -69,7 +69,11 @@ Route::get('admin/museums/{museum}/edit', 'Admin\MuseumsController@edit')->name(
 
 
 
-Route::get('/', 'Client\HomeController@home')->name('root');
+// Route::get('/', 'Client\HomeController@home')->name('root');
 Route::get('/home', 'Client\HomeController@home')->name('home');
 
 //first one is the url, the second one is which controller it is in charge of, the third one name, is the name of the route(like a short formed version)
+
+Route::get('/', function () {
+    return view('welcome');
+});

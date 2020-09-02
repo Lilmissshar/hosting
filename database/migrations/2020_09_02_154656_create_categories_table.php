@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormMuseumsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFormMuseumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_museum', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('form_id');
-            $table->integer('museum_id');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->increments('category_id');
+            $table->string('name');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateFormMuseumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form__museum');
+        Schema::dropIfExists('categories');
     }
 }
