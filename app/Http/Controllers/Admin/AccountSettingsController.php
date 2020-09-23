@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ImageOptimizationServices;
 
-use App\User as Admin;
+use App\Admin as Admin;
 
 class AccountSettingsController extends Controller {
 	protected $path = 'admin.dashboard.';

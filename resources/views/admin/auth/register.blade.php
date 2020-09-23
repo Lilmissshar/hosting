@@ -32,6 +32,12 @@
             </label>
             <input class="form-control" name="password_confirmation" type="password" required="true" />
           </div>
+          <div class="form-group has-label">
+            <label>Mobile
+              <star class="star">*</star>
+            </label>
+            <input class="form-control" name="mobile" type="text" required="true" />
+          </div>
           <div class="card-category form-category">
             <star class="star">*</star> Required fields
 					</div>

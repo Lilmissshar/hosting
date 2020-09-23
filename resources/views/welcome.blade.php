@@ -7,14 +7,14 @@
     <meta name="keywords" content="photo, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/client/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/client/font-awesome.min.css"/>
-    <link rel="stylesheet" href="css/client/slicknav.min.css"/>
-    <link rel="stylesheet" href="css/client/fresco.css"/>
-    <link rel="stylesheet" href="css/client/slick.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/slicknav.min.css"/>
+    <link rel="stylesheet" href="css/fresco.css"/>
+    <link rel="stylesheet" href="css/slick.css"/>
 
     <!-- Main Stylesheets -->
-    <link rel="stylesheet" href="css/client/style.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
 
 
     <!--[if lt IE 9]>
@@ -57,10 +57,10 @@
                 <ul class="nav__menu">
                     <li><a href="./index.html" class="menu--active">Home</a></li>
                     <li><a href="./about.html">About</a></li>
-                    <li><a href="./gallery.html">Gallery</a></li>
+                    {{--<li><a href="./gallery.html">Gallery</a></li>
                     <li><a href="./blog.html">Blog</a>
                         <ul class="sub__menu">
-                            <li><a href="./blog-single.html">Blog Single</a></li>
+                            <li><a href="./blog-single.html">Blog Single</a></li>--}}
                         </ul>
                     </li>
                     <li><a href="./contact.html">Contact</a></li>

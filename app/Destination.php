@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Destination extends Model
 {
     protected $fillable = [
-    	'destinations_id',
     	'name',
     	'description',
     	'state',
     	'type'
     ];
 
-    public function lists() {
-    	return $this->belongsToMany('App\lists', 'lists_destinations', 'lists_id', 'destinations_id');
+    public function plans() {
+    	return $this->belongsToMany('App\Plan', 'plan_destinations', 'plan_id', 'destination_id');
     }
 
     public function category() {
-    	return $this->belongsToMany('App\category', 'destinations_category', 'destinations_id', 'category_id');
+    	return $this->belongsToMany('App\Category', 'destination_categories', 'destination_id', 'category_id');
     }
 }

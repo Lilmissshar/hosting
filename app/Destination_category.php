@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Destination_category extends Model
 {
     protected $fillable = [
-    	'destinations_category_id',
     	'category_id',
-    	'destinations_id'
+    	'destination_id'
     ];
 
     public function destinations() {
-    	return $this->belongsTo('App\destinations');
+    	return $this->belongsTo('App\Destination');
     }
 
     public function category() {
-    	return $this->belongsTo('App\category');
+    	return $this->belongsTo('App\Category');
     }
 }

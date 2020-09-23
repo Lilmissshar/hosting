@@ -14,7 +14,7 @@ class CreateDestinationCategoriesTable extends Migration
     public function up()
     {
         Schema::create('destination_categories', function (Blueprint $table) {
-            $table->increments('destinations_category_id');
+            $table->increments('id');
             $table->integer('category_id');
             $table->integer('destination_id');
             $table->timestamps();

@@ -3,7 +3,7 @@
 @section('master')
   <div class="wrapper wrapper-full-page">
     @include('layouts.partials.admin.stranger-nav')
-    <div class="full-page section-image" data-color="orange" data-image="{{ asset('images/full_screen_bg1.jpg') }}">
+    <div class="full-page section-image" data-color="blue" data-image="{{ asset('images/full_screen_bg1.jpg') }}">
       <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
       <div class="content pt-10vh">
         <div class="container">

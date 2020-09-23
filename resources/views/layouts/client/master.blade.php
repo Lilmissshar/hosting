@@ -6,3 +6,4 @@
 	@yield('content')
   </div>
 @endsection
+
