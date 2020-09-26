@@ -46,11 +46,15 @@
       <!-- <script src="{{ asset('js/client.js') }}"></script>
       @yield('scripts') -->
       <!--====== Javascripts & Jquery ======-->
+    <script src="{{ asset('js/client.js') }}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
     <script src="js/vendor/jquery-3.2.1.min.js"></script>
     <script src="js/jquery.slicknav.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/fresco.min.js"></script>
     <script src="js/main.js"></script>
+    @yield('scripts')
 
     </body>
 </html>

@@ -46,15 +46,19 @@ class DestinationsController extends Controller
     {
         $this->validate($request, [
             "name" => "required",
-            "user_id" => "required"
+            "description" => "required",
+            "state" => "required",
+            "type" => "required"
         ]);
 
         $destination = new Destination(); 
         $destination->name = $request->name;
-        $destination->user_id = $request->user_id;
+        $destination->description = $request->description;
+        $destination->state = $request->state;
+        $destination->type = $request->type;
         $destination->save();
 
-        return redirect()->route('destinations.index');
+        return redirect()->route('admin.destinations.index');
         }
 
     /**
@@ -75,7 +79,7 @@ class DestinationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Destination $destination) {
-    return $this->destinationService->update($request, $list);
+    return $this->destinationService->update($request, $destination);
     }
 
     /**

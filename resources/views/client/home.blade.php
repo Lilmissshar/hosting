@@ -34,7 +34,7 @@
             <nav class="main__menu">
                 <ul class="nav__menu">
                     <li><a href="./index.html" class="menu--active">Home</a></li>
-                    <li><a href="./recommendation.html">Recommendation</a></li>
+                    <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
                    {{--<li><a href="./gallery.html">Gallery</a></li>
                     <li><a href="./blog.html">Blog</a>
                         <ul class="sub__menu">

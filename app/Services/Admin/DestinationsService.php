@@ -24,6 +24,22 @@ class DestinationsService extends TransformerService{
 	    return respond(['rows' => $this->transformCollection($destinations), 'total' => $listCount]);
 	}
 
+	public function update(Request $request, Destination $destination){
+		$data = $request->validate([
+			'name' => 'required',
+			'description' => 'required',
+			'state' => 'required',
+			'type' => 'required'
+		]);
+
+		$destination->name = $data['name'];
+		$destination->description = $data['description'];
+		$destination->state = $data['state'];
+		$destination->type = $data['type'];
+		$destination->save();
+
+		return redirect()->route('admin.destinations.index');
+	}
 
 	// public function update(Request $request, Plan $plan) {
  //    $data = $request->validate([
