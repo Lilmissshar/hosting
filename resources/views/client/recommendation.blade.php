@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-sm-4 col-md-6 order-1  order-md-2 text-center">
                     <a href="./index.html" class="site-logo">
-                        <img src="img/logo.png" alt="">
+                        <img src="img/logo2.png" alt="">
                     </a>
                 </div>
                 <div class="col-sm-4 col-md-3 order-3 order-sm-3">
@@ -57,6 +57,7 @@
 
 
 <body>
+  <br><br>
     <div class="container">
     <div class="card">
       <div class="card-header">

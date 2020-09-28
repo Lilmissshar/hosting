@@ -63,6 +63,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ Vue.component('destinationcategory-component', require('../components/DestinationCategoryComponent.vue'));
+ Vue.component('plandestination-component', require('../components/PlanDestinationComponent.vue'));
+
 const app = new Vue({
     el: '#admin-app'
 });

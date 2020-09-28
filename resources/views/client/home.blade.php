@@ -20,14 +20,14 @@
                 </div>
                 <div class="col-sm-4 col-md-6 order-1  order-md-2 text-center">
                     <a href="./index.html" class="site-logo">
-                        <img src="img/logo.png" alt="">
+                        <img src="img/logo2.png" alt="">
                     </a>
                 </div>
-                <div class="col-sm-4 col-md-3 order-3 order-sm-3">
+                <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
                         <a href="#" class="nav-switch"><i class="fa fa-bars"></i></a>
-                        <a href="#"><i class="fa fa-user-circle fa-7x"></i></a>
+                        <a href="{{ route('login') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
             </div>

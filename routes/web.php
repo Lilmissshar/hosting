@@ -59,6 +59,9 @@ Route::prefix('admin')->group(function(){
 			Route::resource('plans', 'Admin\PlansController');
 			Route::resource('categories','Admin\CategoriesController');
 			Route::resource('destinations', 'Admin\DestinationsController');
+			Route::get('importExport', 'Admin\DestinationsController@importExport')->name('destination.importExport');
+			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel')->name('destination.downloadExcel');
+			Route::post('importExcel', 'Admin\DestinationsController@importExcel')->name('destination.importExcel');
 
 		});
 	});
@@ -80,6 +83,12 @@ Route::get('/', 'Client\HomeController@home')->name('root');
 Route::get('/home', 'Client\HomeController@home')->name('home');
 Route::get('/recommendation', 'Client\HomeController@datepicker')->name('datepicker');
 Route::post('/recommendation/date','Client\HomeController@saveDate')->name('saveDate');
+Route::get('/recommendation/test', 'Client\HomeController@test')->name('test');
+
+
+// Route::get('importExport', 'Admin\DestinationsController@importExport');
+// 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel');
+// 			Route::post('importExcel', 'Admin\DestinationsController@importExcel');
 
 //first one is the url, the second one is which controller it is in charge of, the third one name, is the name of the route(like a short formed version)
 

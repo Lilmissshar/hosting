@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Destination;
+use App\Destination_category;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
 
@@ -19,9 +20,20 @@ class DestinationsService extends TransformerService{
 	    $destinations = Destination::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
 	    $listCount = $destinations->count();
 
-	    $destinations = $destinations->limit($limit)->offset($offset)->get();
+	    $destinations = $destinations->limit($limit)->offset($offset);
 
-	    return respond(['rows' => $this->transformCollection($destinations), 'total' => $listCount]);
+	    $ids = json_decode($request->ids); //jsondecode (from string to array)
+
+	    //the reason we don't send array straight away is because the url cannot read it, if u use string then only it will include the [,] brackets to indicate it as an "array"
+	    
+	    if($ids > 0) { //count how many array elemets are in .. if(count($ids) > 0)
+			$destinations = $destinations->whereNotIn('id', $ids); 
+			//use the wherenotin to exclude whatever is in that id
+	    }
+
+	    $destinations = $destinations->get();
+	    
+	    return respond(['rows' => $destinations, 'total' => $listCount]);
 	}
 
 	public function update(Request $request, Destination $destination){
@@ -41,6 +53,31 @@ class DestinationsService extends TransformerService{
 		return redirect()->route('admin.destinations.index');
 	}
 
+	public function store(Request $request) {
+
+		$data = $request->validate([
+			'name' => "required",
+			'description' => "required",
+			"state" => "required",
+            "type" => "required"
+		]);
+
+        $destination = new Destination(); 
+        $destination->name = $request->name;
+        $destination->description = $request->description;
+        $destination->state = $request->state;
+        $destination->type = $request->type;
+        $destination->save();
+
+        foreach($request->category_id as $id){
+        	$destinationCategory = new Destination_category();
+        	$destinationCategory->destination_id = $destination->id;
+        	$destinationCategory->category_id = $id;
+        	$destinationCategory->save();
+        }
+
+        return redirect()->route('admin.destinations.index');
+     }
 	// public function update(Request $request, Plan $plan) {
  //    $data = $request->validate([
  //      'name' => 'required|string|max:15',
@@ -53,6 +90,16 @@ class DestinationsService extends TransformerService{
  //  }
 
 
+    public function transformCategory($categories){
+    	$names = [];
+
+    	foreach ($names as $name) {
+    		array_push($names, $category->name);
+    	}
+
+    	return implode(',', $names);
+
+    }
 
 	public function transform($destination){
 		return [

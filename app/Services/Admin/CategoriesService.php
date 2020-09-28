@@ -10,18 +10,30 @@ class CategoriesService extends TransformerService{
 
 	public function all(Request $request){
 
-		$sort = $request->sort ? $request->sort : 'created_at'; 
+		$sort = $request->sort ? $request->sort : 'created_at'; //last parameter is the default
 	    $order = $request->order ? $request->order : 'desc';
 	    $limit = $request->limit ? $request->limit : 10;
 	    $offset = $request->offset ? $request->offset : 0;
-	    $query = $request->search ? $request->search : '';
+	    $query = $request->search ? $request->search :'';
 
-	    $categories = Category::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
+	    $categories = Category::where('name', 'like', "%{$query}%")->orderBy($sort, $order);
+
 	    $listCount = $categories->count();
 
-	    $categories = $categories->limit($limit)->offset($offset)->get();
+	    $categories = $categories->limit($limit)->offset($offset);
+	    
+	    $ids = json_decode($request->ids); //jsondecode (from string to array)
 
-	    return respond(['rows' => $this->transformCollection($categories), 'total' => $listCount]);
+	    //the reason we don't send array straight away is because the url cannot read it, if u use string then only it will include the [,] brackets to indicate it as an "array"
+	    
+	    if($ids > 0) { //count how many array elemets are in .. if(count($ids) > 0)
+			$categories = $categories->whereNotIn('id', $ids); 
+			//use the wherenotin to exclude whatever is in that id
+	    }
+
+	    $categories = $categories->get();
+	    
+	    return respond(['rows' => $categories, 'total' => $listCount]);
 	}
 
 	public function store(Request $request){

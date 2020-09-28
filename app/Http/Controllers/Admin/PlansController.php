@@ -23,5 +23,15 @@ class PlansController extends Controller
     return view($this->path . 'index');
   }
 
+    public function create()
+    {
+      return view($this->path . 'create');
+    }
+
+    public function store(Request $request)
+    {
+      return $this->planService->store($request);
+    }
+
 
 }

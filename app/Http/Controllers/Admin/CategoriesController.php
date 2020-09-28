@@ -17,7 +17,7 @@ class CategoriesController extends Controller
       } 
 
     public function index(Request $request){
-    if ($request->isJson()) {
+    if ($request->wantsJson()) {
       return $this->categoryService->all($request);
     }
     return view($this->path . 'index');

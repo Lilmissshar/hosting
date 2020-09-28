@@ -18,7 +18,10 @@ class HomeController extends Controller{
 	}
 
 	public function saveDate(Request $request){
-		dd($request->endDate);
+		$data = [
+			'startDate' => $request->startDate,
+			'endDate' => $request->endDate
+			];
 
 		// $data = $request->validate([
 		// 	'name' => "required",
@@ -30,6 +33,11 @@ class HomeController extends Controller{
 		// $category->description = $request->description;
 		// $category->save();
 
-		return redirect()->route('home');
+		if ($request->wantsJson()) {
+	      return route('test', $data);
+	    }
+	    return view($this->path . 'recommendation1', $data);
+
 	}
+
 }

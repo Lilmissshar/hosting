@@ -13,7 +13,7 @@
       <div class="card-body">
         {!! Form::open(['route' => 'admin.destinations.store', 'class' => 'form', 'id' => 'form-validation']) !!}
         <div class="form-group has-label">
-          <label>Category Name
+          <label>Destination Name
             <star class="star">*</star>
           </label>
           {{ Form::text('name', null, [ 'class' => 'form-control', 'required']) }}
@@ -36,6 +36,7 @@
           </label>
           {{ Form::select('type', array('Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
         </div>
+        <destinationcategory-component></destinationcategory-component>
         <div class="card-category form-category">
           <star class="star">*</star> Required fields
 				</div>
