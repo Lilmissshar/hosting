@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan_destination extends Model
 {
-    protected $fillable [
+    protected $fillable = [
     	'plan_id',
     	'destination_id'
     ];

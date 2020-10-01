@@ -2,12 +2,12 @@
 
 @section('content')
 
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-    <!-- Header Section -->
+<!-- Header Section -->
 <header class="header">
         <div class="container-fluid">
             <div class="row">
@@ -27,7 +27,7 @@
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
                         <a href="#" class="nav-switch"><i class="fa fa-bars"></i></a>
-                        <a href="{{ route('login') }}"><i class="fa fa-user-circle fa-7x"></i></a>
+                        <a href="#"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                 <ul class="nav__menu">
                     <li><a href="./index.html" class="menu--active">Home</a></li>
                     <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
-                   {{--<li><a href="./gallery.html">Gallery</a></li>
-                    <li><a href="./blog.html">Blog</a>
+                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                    {{--<li><a href="./blog.html">Blog</a>
                         <ul class="sub__menu">
                             <li><a href="./blog-single.html">Blog Single</a></li>
                         </ul>

@@ -37,6 +37,12 @@
           {{ Form::select('type', array('Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
         </div>
         <destinationcategory-component></destinationcategory-component>
+        <div class="form-group has-label">
+          <label>Uploads
+            <star class="star">*</star>
+          </label><br>
+          {{ Form::File('image', null, ['class' => 'form-control', 'required']) }}
+        </div>
         <div class="card-category form-category">
           <star class="star">*</star> Required fields
 				</div>

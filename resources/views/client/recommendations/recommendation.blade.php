@@ -1,21 +1,29 @@
-@extends('layouts.client.master')
-
-@section('content')
+<html>
+<head>
+<title>Sharon's FYP</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="FYP">
+  <meta name="keywords" content="photo, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="css/slicknav.min.css"/>
+  <link rel="stylesheet" href="css/fresco.css"/>
+  <link rel="stylesheet" href="css/slick.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+</head>
 
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
 </div>
 
-    <!-- Header Section -->
+<!-- Header Section -->
 <header class="header">
-  <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4 col-md-3 order-2 order-sm-1">
@@ -30,7 +38,7 @@
                         <img src="img/logo2.png" alt="">
                     </a>
                 </div>
-                <div class="col-sm-4 col-md-3 order-3 order-sm-3">
+                <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
                         <a href="#" class="nav-switch"><i class="fa fa-bars"></i></a>
@@ -40,10 +48,10 @@
             </div>
             <nav class="main__menu">
                 <ul class="nav__menu">
-                    <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li><a class="menu--active" href="{{ route('datepicker') }}">Recommendation</a></li>
-                   {{--<li><a href="./gallery.html">Gallery</a></li>
-                    <li><a href="./blog.html">Blog</a>
+                    <li><a href="./index.html" class="menu--active">Home</a></li>
+                    <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
+                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                    {{--<li><a href="./blog.html">Blog</a>
                         <ul class="sub__menu">
                             <li><a href="./blog-single.html">Blog Single</a></li>
                         </ul>
@@ -55,9 +63,8 @@
     </header>
     <!-- Header Section end -->
 
-
 <body>
-  <br><br>
+    <br><br>
     <div class="container">
     <div class="card">
       <div class="card-header">
@@ -97,22 +104,27 @@
 </div>
 
 <script>
-  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  $('#startDate').datepicker({
-      uiLibrary: 'bootstrap4',
-      iconsLibrary: 'fontawesome',
-      minDate: today,
-      maxDate: function () {
-          return $('#endDate').val();
-      }
-  });
-  $('#endDate').datepicker({
-      uiLibrary: 'bootstrap4',
-      iconsLibrary: 'fontawesome',
-      minDate: function () {
-          return $('#startDate').val();
-      }
-  });
+    var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    $('#startDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        minDate: today,
+        maxDate: function () {
+            return $('#endDate').val();
+        }
+    });
+    $('#endDate').datepicker({
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        minDate: function () {
+            return $('#startDate').val();
+        }
+    });
 </script>
+<script src="js/vendor/jquery-3.2.1.min.js"></script>
+<script src="js/jquery.slicknav.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/fresco.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

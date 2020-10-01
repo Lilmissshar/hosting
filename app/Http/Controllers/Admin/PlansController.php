@@ -33,5 +33,11 @@ class PlansController extends Controller
       return $this->planService->store($request);
     }
 
+    // public function edit(Plan $plan) {
+    //   $destination = $plan->destinations;
+    //   dd($destination);
+
+    // }
+
 
 }

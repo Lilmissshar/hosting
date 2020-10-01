@@ -6,6 +6,8 @@ use App\Destination;
 use App\Destination_category;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
+use Carbob\Carbon;
+use File;
 
 class DestinationsService extends TransformerService{
 
@@ -33,24 +35,7 @@ class DestinationsService extends TransformerService{
 
 	    $destinations = $destinations->get();
 	    
-	    return respond(['rows' => $destinations, 'total' => $listCount]);
-	}
-
-	public function update(Request $request, Destination $destination){
-		$data = $request->validate([
-			'name' => 'required',
-			'description' => 'required',
-			'state' => 'required',
-			'type' => 'required'
-		]);
-
-		$destination->name = $data['name'];
-		$destination->description = $data['description'];
-		$destination->state = $data['state'];
-		$destination->type = $data['type'];
-		$destination->save();
-
-		return redirect()->route('admin.destinations.index');
+	    return respond(['rows' => $this->transformCollection($destinations), 'total' => $listCount]);
 	}
 
 	public function store(Request $request) {
@@ -67,7 +52,16 @@ class DestinationsService extends TransformerService{
         $destination->description = $request->description;
         $destination->state = $request->state;
         $destination->type = $request->type;
-        $destination->save();
+
+        if ($request->file('image')){
+        	$imageName = Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+        	$request->file('image')->move(base_path() . '/storage/app/public/destinations', $imageName);
+        	$destination->picture = $imageName;
+        	$destination->save();
+        } else {
+
+        	$destination->save();
+        }
 
         foreach($request->category_id as $id){
         	$destinationCategory = new Destination_category();
@@ -78,6 +72,35 @@ class DestinationsService extends TransformerService{
 
         return redirect()->route('admin.destinations.index');
      }
+
+	public function update(Request $request, Destination $destination){
+		$data = $request->validate([
+			'name' => 'required',
+			'description' => 'required',
+			'state' => 'required',
+			'type' => 'required'
+		]);
+
+		$destination->name = $data['name'];
+		$destination->description = $data['description'];
+		$destination->state = $data['state'];
+		$destination->type = $data['type'];
+		$destination->save();
+
+		foreach($request->category_id as $id){
+			$destinationCategory = new Destination_category();
+			$destinationCategory->destination_id = $destination->id;
+			$destinationCategory->category_id = $id;
+			$destinationCategory->save();
+		}
+
+		$destination->category()->sync([]);
+		$destination->category()->sync($request->category_id);
+
+		return redirect()->route('admin.destinations.index');
+	}
+
+	
 	// public function update(Request $request, Plan $plan) {
  //    $data = $request->validate([
  //      'name' => 'required|string|max:15',
@@ -90,10 +113,10 @@ class DestinationsService extends TransformerService{
  //  }
 
 
-    public function transformCategory($categories){
+    public function transformKategory($categories){
     	$names = [];
 
-    	foreach ($names as $name) {
+    	foreach ($categories as $category) {
     		array_push($names, $category->name);
     	}
 
@@ -107,7 +130,8 @@ class DestinationsService extends TransformerService{
 			'name' => $destination->name,
 			'description' => $destination->description,
 			'state' => $destination->state,
-			'type' => $destination->type
+			'type' => $destination->type,
+			'categories' => $this->transformKategory($destination->category)
 		];
 	}
 }

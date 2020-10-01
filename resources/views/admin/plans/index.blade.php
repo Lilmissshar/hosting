@@ -16,7 +16,9 @@
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
           <th data-field="name">Plan Name</th>
           <th data-field="user_id">User ID</th>
+          <th data-field="destinations">Destinations</th>
          </th>
+         <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
       </table>
     </div>

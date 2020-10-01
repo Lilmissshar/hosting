@@ -40,6 +40,7 @@
                 </label>
                 {{ Form::select('type', array('Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
               </div>
+              <destinationcategory-component prop-categories="{{ $categories }}"></destinationcategory-component>
               <div class="card-footer ml-auto mr-auto mt-3 text-right">
                 <button type="submit" class="btn btn-warning btn-wd">Save Edit</button>
               </div>

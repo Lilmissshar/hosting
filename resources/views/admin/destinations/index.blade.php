@@ -22,6 +22,7 @@
           <th data-field="description">Description</th>
           <th data-field="state">State</th>
           <th data-field="type">Type</th>
+          <th data-field="categories">Category</th>
          </th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>

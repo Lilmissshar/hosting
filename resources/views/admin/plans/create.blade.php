@@ -18,12 +18,6 @@
           </label>
           {{ Form::text('name', null, [ 'class' => 'form-control', 'required']) }}
         </div>
-        <div class="form-group has-label">
-          <label>User ID
-            <star class="star">*</star>
-          </label>
-          {{ Form::text('user_id', null, ['class' => 'form-control', 'required']) }}
-        </div>
         <plandestination-component></plandestination-component>
         <div class="card-category form-category">
           <star class="star">*</star> Required fields

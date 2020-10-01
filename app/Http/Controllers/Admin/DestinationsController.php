@@ -42,10 +42,7 @@ class DestinationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-
-    {
-
+    public function store(Request $request){
         return $this->destinationService->store($request);
     }
         
@@ -57,7 +54,9 @@ class DestinationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Destination $destination){
-    return view($this->path . 'edit', ['destination' => $destination]);
+        
+        $categories = $destination->category;
+        return view($this->path . 'edit', ['destination' => $destination, 'categories' => $categories ]);
     }
 
     /**
@@ -68,7 +67,7 @@ class DestinationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Destination $destination) {
-    return $this->destinationService->update($request, $destination);
+        return $this->destinationService->update($request, $destination);
     }
 
     /**

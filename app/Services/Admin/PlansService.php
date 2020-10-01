@@ -28,13 +28,12 @@ class PlansService extends TransformerService{
 	public function store(Request $request){
 
 		$data = $request->validate([
-			'name' => "required",
-			'user_id' => "required"
+			'name' => "required"
 		]);
 
 		$plan = new Plan();
 		$plan->name = $request->name;
-		$plan->user_id = $request->user_id;
+		$plan->user_id = current_user()->id;
 		$plan->save();
 
 		 foreach($request->destination_id as $id){
@@ -48,11 +47,11 @@ class PlansService extends TransformerService{
 		return redirect()->route('admin.plans.index');
 	}
 
-	public function transformCategory($categories){
+	public function transformDestination($destinations){
     	$names = [];
 
-    	foreach ($names as $name) {
-    		array_push($names, $category->name);
+    	foreach ($destinations as $destination) {
+    		array_push($names, $destination->name);
     	}
 
     	return implode(',', $names);
@@ -64,7 +63,8 @@ class PlansService extends TransformerService{
 		return [
 			'id' => $plan->id,
 			'name' => $plan->name,
-			'user_id' => $plan->user_id
+			'user_id' => $plan->user_id,
+			'destinations' => $this->transformDestination($plan->destinations)
 		];
 	}
 }
