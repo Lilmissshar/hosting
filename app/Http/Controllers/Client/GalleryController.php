@@ -12,7 +12,9 @@ class GalleryController extends Controller{
 
 	public function gallery(){
 
-		return view($this->path . 'gallery');
+		$destinations = Destination::all();
+
+		return view($this->path . 'gallery', ['destinations' => $destinations]);
 	}
 
 	public function galleryPenang(Request $request){

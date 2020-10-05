@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Client;
 
 use App\Plan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Admin\PlansService; 
+use App\Services\Client\PlansService; 
 
 class PlansController extends Controller
 {
-    protected $path = 'admin.plans.';
+    protected $path = 'client.plans.';
     protected $plansService;
 
     public function __construct(PlansService $plansService){
@@ -17,11 +17,9 @@ class PlansController extends Controller
       } 
 
     public function index(Request $request){
-      if ($request->isJson()) {
-        return $this->planService->all($request);
-      }
-      return view($this->path . 'index');
+      return $this->planService->all();
     }
+    
 
     public function create()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Services\Client;
 
 use App\Plan;
 use App\Plan_destination;
@@ -9,20 +9,16 @@ use App\Services\TransformerService;
 
 class PlansService extends TransformerService{
 
-	public function all(Request $request){
+	protected $path = 'client.plans.';
 
-		$sort = $request->sort ? $request->sort : 'created_at'; 
-	    $order = $request->order ? $request->order : 'desc';
-	    $limit = $request->limit ? $request->limit : 10;
-	    $offset = $request->offset ? $request->offset : 0;
-	    $query = $request->search ? $request->search : '';
+	public function all(){
+		$plans = Plan::where('user_id', current_user()->id)->paginate(10);
+		$plans->getCollection()->transform(function($plan) {
+			return $this->transform($plan);
+		});
 
-	    $plans = Plan::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
-	    $listCount = $plans->count();
-
-	    $plans = $plans->limit($limit)->offset($offset)->get();
-
-	    return respond(['rows' => $this->transformCollection($plans), 'total' => $listCount]);
+		return view($this->path . 'index', ['plans' => $plans]);
+		
 	}
 
 	public function store(Request $request){
@@ -34,8 +30,6 @@ class PlansService extends TransformerService{
 		$plan = new Plan();
 		$plan->name = $request->name;
 		$plan->user_id = current_user()->id;
-		$plan->start_date = $request->start_date;
-		$plan->end_date = $request->end_date;
 		$plan->save();
 
 		 foreach($request->destination_id as $id){
@@ -66,6 +60,8 @@ class PlansService extends TransformerService{
 			'id' => $plan->id,
 			'name' => $plan->name,
 			'user_id' => $plan->user_id,
+			'start_date' =>$plan->start_date,
+			'end_date' =>$plan->end_date,
 			'destinations' => $this->transformDestination($plan->destinations)
 		];
 	}

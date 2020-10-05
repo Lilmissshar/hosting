@@ -46,6 +46,12 @@
           <p>Destinations</p>
         </a>
       </li>
+      <li class="nav-item {{ is_active('keywords') }}">
+        <a class="nav-link" href="{{ route('admin.keywords.index') }}">
+          <i class="fa fa-key"></i>
+          <p>Keys</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

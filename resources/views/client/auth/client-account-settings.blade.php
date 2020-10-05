@@ -1,22 +1,6 @@
-<html>
-<head>
-<title>Sharon's FYP</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="FYP">
-  <meta name="keywords" content="photo, html">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="css/slicknav.min.css"/>
-  <link rel="stylesheet" href="css/fresco.css"/>
-  <link rel="stylesheet" href="css/slick.css"/>
-  <link rel="stylesheet" href="css/style.css"/>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-</head>
+@extends('layouts.client.master')
 
+@section('content')
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
@@ -28,13 +12,13 @@
             <div class="row">
                 <div class="col-sm-4 col-md-3 order-2 order-sm-1">
                     <div class="header__social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ route('client.account.show') }}"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
                         <a href="#"><i class="fa fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-6 order-1  order-md-2 text-center">
-                    <a href="{{ route('home') }}" class="site-logo">
+                    <a href="./index.html" class="site-logo">
                         <img src="img/logo2.png" alt="">
                     </a>
                 </div>
@@ -66,10 +50,11 @@
                     </div>
                 </div>
                 @endif
+
             </div>
             <nav class="main__menu">
                 <ul class="nav__menu">
-                    <li><a href="{{ route('home') }}" class="menu--active">Home</a></li>
+                    <li><a href="./index.html" class="menu--active">Home</a></li>
                     <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
                    <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
                     {{--<li><a href="./blog.html">Blog</a>
@@ -84,68 +69,98 @@
     </header>
     <!-- Header Section end -->
 
-<body>
-    <br><br>
-    <div class="container">
+	<div class="container">
     <div class="card">
       <div class="card-header">
         <div class="row">
           <div class="col-12 d-flex">
-            <h4 class="text-center mr-auto my-1">Add a new date</h4>
+            <h4 class="text-center mr-auto my-1">Account Settings</h4>
           </div>
         </div>
       </div>
       <div class="card-body">
-      {!! Form::open(['route' => 'saveDate', 'class' => 'form', 'id' => 'form-validation']) !!}
-      <div class="form-group has-label">
-          <label>Start Date
+        {!! Form::model(current_user(), ['route' => ['client.account.update'], 'enctype' => 'multipart/form-data', 'class' => 'form', 'id' => 'account-settings-form']) !!}
+        <div class="form-group has-label">
+          <label>Profile Picture
             <star class="star">*</star>
           </label>
-          {{ Form::Date('startDate', null, ['class' => 'form-control', 'required']) }}
+          <div class="d-flex">
+						<img src="{{ avatar_picture_url(current_user()->avatar) }}" id="avatar-pic" class="border-gray img-thumbnail img-thumbnail-profile"><br>
+						<div class="input-group mb-3">
+						  <div class="custom-file">
+								{{ Form::file('avatar', ['class' =>'custom-file-input on__file__change', 'id' => 'file-picker', 'data-target' => '#avatar-pic'])}}<br>
+						    <label class="custom-file-label" for="file-picker">Choose file</label>
+						  </div>
+						</div>
+
+          </div>
         </div>
         <div class="form-group has-label">
-          <label>End Date
+          <label>Name
             <star class="star">*</star>
           </label>
-          {{ Form::Date('endDate', null, ['class' => 'form-control', 'required']) }}
+          {{ Form::text('name', current_user()->name, [ 'class'=>'form-control', 'required']) }}
         </div>
+        <div class="form-group has-label">
+          <label>Email
+            <star class="star">*</star>
+          </label>
+          {{ Form::text('email', current_user()->email, ['class' => 'form-control disabled', 'required', 'disabled']) }}
+        </div>
+
+        <div class="card-category form-category">
+          <star class="star">*</star> Required fields
+				</div>
+
+        <div class="card-footer text-right">
+          <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+        </div>
+
+        {!! Form::close() !!}
+      </div>
     </div>
-
-    <div class="card-category form-category">
-      <star class="star">*</star> Required fields
-    </div>
-
-    <div class="card-footer text-right">
-      <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
-    </div>
-
-    {!! Form::close() !!}
-
   </div>
-</div>
 
-<script>
-    var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-    $('#startDate').datepicker({
-        uiLibrary: 'bootstrap4',
-        iconsLibrary: 'fontawesome',
-        minDate: today,
-        maxDate: function () {
-            return $('#endDate').val();
-        }
-    });
-    $('#endDate').datepicker({
-        uiLibrary: 'bootstrap4',
-        iconsLibrary: 'fontawesome',
-        minDate: function () {
-            return $('#startDate').val();
-        }
-    });
-</script>
-<script src="js/vendor/jquery-3.2.1.min.js"></script>
-<script src="js/jquery.slicknav.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/fresco.min.js"></script>
-<script src="js/main.js"></script>
-</body>
-</html>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12 d-flex">
+            <h4 class="text-center mr-auto my-1">Change Password</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        {!! Form::open(['route' => ['client.password.change'], 'method' => 'PUT', 'class' => 'form', 'id' => 'change-password-form']) !!}
+        <div class="form-group has-label">
+          <label>Current Password
+            <star class="star">*</star>
+          </label>
+          <input class="form-control" name="current_password" type="password" required="true" />
+        </div>
+        <div class="form-group has-label">
+          <label>new password
+            <star class="star">*</star>
+          </label>
+          <input class="form-control" name="password" type="password" required="true" />
+        </div>
+        <div class="form-group has-label">
+          <label>Confirm Password
+            <star class="star">*</star>
+          </label>
+          <input class="form-control" name="password_confirmation" type="password" required="true" />
+        </div>
+
+        <div class="card-category form-category">
+          <star class="star">*</star> Required fields
+				</div>
+
+        <div class="card-footer text-right">
+          <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+        </div>
+
+        {!! Form::close() !!}
+      </div>
+    </div>
+  </div>
+@endsection

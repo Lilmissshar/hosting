@@ -65,6 +65,7 @@ window.Vue = require('vue');
 
  Vue.component('destinationcategory-component', require('../components/DestinationCategoryComponent.vue'));
  Vue.component('plandestination-component', require('../components/PlanDestinationComponent.vue'));
+ Vue.component('keyword-destination-component', require('../components/KeywordDestinationComponent.vue'));
 
 const app = new Vue({
     el: '#admin-app'

@@ -32,13 +32,14 @@ class RecommendationsController extends Controller {
 		// $category->save();
 		Session::put('startDate', $request->startDate);
 		Session::put('endDate', $request->endDate);
-		return \App::call('App\Http\Controllers\Client\RecommendationsController@test');
+
+		$destinations = Destination::all();
+		
 
 		// if ($request->wantsJson()) {
 	 //      return route('test', $data);
 	 //    }
-	 //    return view($this->path . 'recommendation1', $data);
-
+	    return \App::call('App\Http\Controllers\Client\RecommendationsController@viewTest');
 		// 	Session::put('startDate', $request->startDate);
 
 	}
@@ -53,6 +54,15 @@ class RecommendationsController extends Controller {
 		
 		return view($this->path . 'saving', ['start' => $start, 'end' => $end]);
 
+	}
+
+	public function viewTest(){
+
+		$destinations = Destination::all();
+		$start = Session::get('startDate');
+		$end = Session::get('endDate');
+
+		return view($this->path . 'testtt', ['destinations' => $destinations, 'start' => $start, 'end' => $end]);
 	}
 
 }

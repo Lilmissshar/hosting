@@ -10,6 +10,8 @@ class Plan extends Model
         'id',
     	'name',
     	'user_id',
+        'start_date',
+        'end_date',
     	'timestamp'
     ];
 

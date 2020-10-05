@@ -24,21 +24,42 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-6 order-1  order-md-2 text-center">
-                    <a href="./index.html" class="site-logo">
+                    <a href="{{ route('home') }}" class="site-logo">
                         <img src="img/logo2.png" alt="">
                     </a>
                 </div>
+                @if(!current_user())
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
                         <a href="#" class="nav-switch"><i class="fa fa-bars"></i></a>
-                        <a href="#"><i class="fa fa-user-circle"></i></a>
+                        <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
+                @elseif (current_user()->id == '1')
+                <div class="col-sm-4 col-md-3 order-1 order-sm-3">
+                    <div class="header__switches">
+                        <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
+                        <a href="#" class="nav-switch"><i class="fa fa-bars"></i></a>
+                        <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
+                    </div>
+                </div>
+                @else
+                <div class="col-sm-4 col-md-3 order-1 order-sm-3">
+                    <div class="header__switches">
+                        <a class="nav-link" href="{{route('client.account.show')}}">
+                          <i class="fa fa-cog"></i> Settings
+                        </a>
+                        <a href="{{ route('client.logout') }}" class="nav-link" style="color:red;">
+                          <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </div>
+                </div>
+                @endif
             </div>
             <nav class="main__menu">
                 <ul class="nav__menu">
-                    <li><a href="{{ 'home' }}" class="nav-link">Home</a></li>
+                    <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
                     <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
                    <li><a class="menu--active" href="{{ route('gallery') }}">Gallery</a></li>
                     {{--<li><a href="./blog.html">Blog</a>

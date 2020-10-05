@@ -10,7 +10,8 @@ class Destination extends Model
     	'name',
     	'description',
     	'state',
-    	'type'
+    	'type',
+        'picture'
     ];
 
     public function plans() {
@@ -19,5 +20,9 @@ class Destination extends Model
 
     public function category() {
     	return $this->belongsToMany('App\Category', 'destination_categories', 'destination_id', 'category_id');
+    }
+
+    public function keywords() {
+        return $this->belongsToMany('App\Keyword', 'keyword_destinations', 'destination_id', 'keyword_id');
     }
 }

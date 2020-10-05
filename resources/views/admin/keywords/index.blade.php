@@ -5,26 +5,16 @@
 <div class="card bootstrap-table">
     <div class="card-body table-full-width">
       <div class="toolbar">
-        <a href="{{ route('admin.destination.importExport') }}" class="m1-1">
-          <button class="btn btn-outline" style="border-radius: 30px">
-            <i class="glyphicon fa fa-upload"></i>
-          </button>
-        <a href="{{ route('admin.destinations.create') }}" class="ml-1">
+        <a href="{{ route('admin.keywords.create') }}" class="ml-1">
           <button class="btn btn-outline" style="border-radius: 30px">
             <i class="glyphicon fa fa-plus"></i>
           </button>
         </a>
       </div>
-      <table id="bootstrap-table" class="table" data-url="{{ route('admin.destinations.index') }}">
+      <table id="bootstrap-table" class="table" data-url="{{ route('admin.keywords.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
-          <th data-field="name">Name</th>
-          <th data-field="description">Description</th>
-          <th data-field="state">State</th>
-          <th data-field="type">Type</th>
-          <th data-field="categories">Category</th>
-          <th data-field="keywords">Keywords</th>
-          <th data-field="picture">Picture</th>
+          <th data-field="name">Keyword Name</th>
          </th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>

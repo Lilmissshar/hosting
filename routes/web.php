@@ -59,6 +59,7 @@ Route::prefix('admin')->group(function(){
 			Route::resource('plans', 'Admin\PlansController');
 			Route::resource('categories','Admin\CategoriesController');
 			Route::resource('destinations', 'Admin\DestinationsController');
+			Route::resource('keywords', 'Admin\KeywordsController');
 			Route::get('importExport', 'Admin\DestinationsController@importExport')->name('destination.importExport');
 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel')->name('destination.downloadExcel');
 			Route::post('importExcel', 'Admin\DestinationsController@importExcel')->name('destination.importExcel');
@@ -76,6 +77,18 @@ Route::get('admin/museums/{museum}/edit', 'Admin\MuseumsController@edit')->name(
 
  Route::post('museums', 'Client\MuseumsController@index')->name('client.museums.index');
  //museums is the url, which is used in the component script js part to link it to show the information of the museums aka the museumsName
+
+//Client authentication
+Route::get('clientRegister', 'Client\AuthController@viewRegister')->name('client.register.show');
+Route::post('clientRegister', 'Client\AuthController@Register')->name('client.register');
+Route::get('clientLogin', 'Client\AuthController@viewLogin')->name('client.login.show');
+Route::post('clientLogin', 'Client\AuthController@login')->name('client.login');
+
+//Client account settings
+Route::get('clientSettings', 'Client\AccountSettingsController@viewAccount')->name('client.account.show');
+Route::post('clientSettings', 'Client\AccountSettingsController@updateAccount')->name('client.account.update');
+Route::put('clientSettings/password', 'Client\AccountSettingsController@updatePassword')->name('client.password.change');
+Route::get('logoutC', 'Client\AuthController@logout')->name('client.logout');
 
 
 //home
@@ -193,8 +206,9 @@ Route::get('/recommendation', 'Client\RecommendationsController@datepicker')->na
 Route::post('/recommendation/date','Client\RecommendationsController@saveDate')->name('saveDate');
 Route::get('/recommendation/test', 'Client\RecommendationsController@test')->name('test');
 
+Route::get('/testtt', 'Client\RecommendationsController@viewTest')->name('testtt');
 
-
+Route::resource('plans', 'Client\PlansController');
 
 // Route::get('importExport', 'Admin\DestinationsController@importExport');
 // 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel');
@@ -209,4 +223,8 @@ Route::get('/test', function () {
 Route::get('/test2', function() {
 
 	return view('test');
+});
+Route::get('/test3', function() {
+
+	return view('test2');
 });

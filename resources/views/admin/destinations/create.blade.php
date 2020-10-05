@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="card-body">
-        {!! Form::open(['route' => 'admin.destinations.store', 'class' => 'form', 'id' => 'form-validation']) !!}
+        {!! Form::open(['route' => 'admin.destinations.store', 'class' => 'form', 'id' => 'form-validation', 'files' => true]) !!}
         <div class="form-group has-label">
           <label>Destination Name
             <star class="star">*</star>
@@ -36,13 +36,14 @@
           </label>
           {{ Form::select('type', array('Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
         </div>
-        <destinationcategory-component></destinationcategory-component>
         <div class="form-group has-label">
           <label>Uploads
             <star class="star">*</star>
           </label><br>
           {{ Form::File('image', null, ['class' => 'form-control', 'required']) }}
         </div>
+        <destinationcategory-component></destinationcategory-component>
+        <keyword-destination-component></keyword-destination-component>
         <div class="card-category form-category">
           <star class="star">*</star> Required fields
 				</div>

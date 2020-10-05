@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Keyword;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\Admin\KeywordsService; 
+
+class KeywordsController extends Controller
+{
+    protected $path = 'admin.keywords.';
+    protected $keywordsService;
+
+    public function __construct(KeywordsService $keywordsService){
+        $this->keywordService = $keywordsService;
+      } 
+
+    public function index(Request $request){
+    if ($request->wantsJson()) {
+      return $this->keywordService->all($request);
+    }
+    return view($this->path . 'index');
+  }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view($this->path . 'create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return $this->keywordService->store($request);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Museum  $museum
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Keyword $keyword){
+    return view($this->path . 'edit', ['keyword' => $keyword]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Museum  $museum
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Keyword $keyword) {
+    return $this->keywordService->update($request, $keyword);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Museum  $museum
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Keyword $keyword)
+    {
+        $keyword->delete();
+
+        return success();
+    }
+}

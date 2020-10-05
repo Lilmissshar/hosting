@@ -4,9 +4,11 @@ namespace App\Services\Admin;
 
 use App\Destination;
 use App\Destination_category;
+use App\KeywordDestination;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
-use Carbob\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use File;
 
 class DestinationsService extends TransformerService{
@@ -54,19 +56,26 @@ class DestinationsService extends TransformerService{
         $destination->type = $request->type;
 
         if ($request->file('image')){
-        	$imageName = Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
-        	$request->file('image')->move(base_path() . '/storage/app/public/destinations', $imageName);
-        	$destination->picture = $imageName;
-        	$destination->save();
-        } else {
+			$imageName = Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+			$request->file('image')->move(public_path('images/destinations'), $imageName);
+			$destination->picture = $imageName;
+			$destination->save();
+		} else {
+			$destination->save();
+		}
 
-        	$destination->save();
-        }
 
         foreach($request->category_id as $id){
         	$destinationCategory = new Destination_category();
         	$destinationCategory->destination_id = $destination->id;
         	$destinationCategory->category_id = $id;
+        	$destinationCategory->save();
+        }
+
+        foreach($request->keyword_id as $id){
+        	$destinationCategory = new KeywordDestination();
+        	$destinationCategory->destination_id = $destination->id;
+        	$destinationCategory->keyword_id = $id;
         	$destinationCategory->save();
         }
 
@@ -124,6 +133,16 @@ class DestinationsService extends TransformerService{
 
     }
 
+    public function transformkey($keywords) {
+    	$names = [];
+
+    	foreach($keywords as $keyword) {
+    		array_push($names, $keyword->name);
+    	}
+
+    	return implode(',', $names);
+    }
+
 	public function transform($destination){
 		return [
 			'id' => $destination->id,
@@ -131,7 +150,9 @@ class DestinationsService extends TransformerService{
 			'description' => $destination->description,
 			'state' => $destination->state,
 			'type' => $destination->type,
-			'categories' => $this->transformKategory($destination->category)
+			'categories' => $this->transformKategory($destination->category),
+			'keywords' =>$this->transformkey($destination->keywords),
+			'picture' =>$destination->picture
 		];
 	}
 }
