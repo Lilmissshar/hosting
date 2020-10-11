@@ -56,7 +56,8 @@ class DestinationsController extends Controller
     public function edit(Destination $destination){
         
         $categories = $destination->category;
-        return view($this->path . 'edit', ['destination' => $destination, 'categories' => $categories ]);
+        $keywords = $destination->keywords;
+        return view($this->path . 'edit', ['destination' => $destination, 'categories' => $categories, 'keywords' => $keywords ]);
     }
 
     /**
@@ -110,7 +111,7 @@ class DestinationsController extends Controller
  
         if($data->count()){
             foreach ($data as $key => $value) {
-                $arr[] = ['name' => $value->title, 'description' => $value->description, 'state' => $value->state, 'type' => $value->type];
+                $arr[] = ['name' => $value->name, 'description' => $value->description, 'state' => $value->state, 'type' => $value->type, 'picture' => $value->picture];
             }
  
             if(!empty($arr)){

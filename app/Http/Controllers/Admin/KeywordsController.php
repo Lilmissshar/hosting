@@ -6,6 +6,7 @@ use App\Keyword;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\KeywordsService; 
+use Excel;
 
 class KeywordsController extends Controller
 {
@@ -76,5 +77,43 @@ class KeywordsController extends Controller
         $keyword->delete();
 
         return success();
+    }
+
+        public function importExport(){
+        return view ($this->path . 'importExport');
+    }
+
+    public function downloadExcel($type){
+
+        $data = Keyword::get()->toArray();
+
+        return Excel::create('keyword_database', function($excel) use ($data) {
+            $excel->sheet('mySheet', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'import_file' => 'required'
+        ]);
+ 
+        $path = $request->file('import_file')->getRealPath();
+        $data = Excel::load($path)->get();
+ 
+        if($data->count()){
+            foreach ($data as $key => $value) {
+                $arr[] = ['name' => $value->name];
+            }
+ 
+            if(!empty($arr)){
+                Keyword::insert($arr);
+            }
+        }
+ 
+        return back()->with('success', 'Insert Record successfully.');
     }
 }

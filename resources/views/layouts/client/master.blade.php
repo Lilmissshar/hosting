@@ -2,7 +2,7 @@
 
 @section('master')
   <div class="wrapper">
-  	@include('layouts.partials.admin.notification')
+  	@include('layouts.partials.client.notification')
 	@yield('content')
   </div>
 @endsection

@@ -28,6 +28,14 @@
       <!-- Main Stylesheets -->
       <link rel="stylesheet" href="css/style.css"/>
 
+<!--       <link href="{{ asset('css/style.css') }}" rel="stylesheet"> -->
+<!-- 
+      <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/slicknav.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/fresco.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
+ -->
 
 
       <!--[if lt IE 9]>

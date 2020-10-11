@@ -1,6 +1,7 @@
 @extends('layouts.client.master') 
 
 @section('content')
+Gallery
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -73,13 +74,12 @@
     </header>
   <!-- Header Section end -->
 <body>
-
 <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Pick a state
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{ route('galleryPenang') }}">Penang</a>
+    <a class="dropdown-item" href="{{ route('galleryPenang' )}}">Penang</a>
     <a class="dropdown-item" href="#">Perak</a>
     <a class="dropdown-item" href="#">Perlis</a>
     <a class="dropdown-item" href="#">Kedah</a>
@@ -92,115 +92,91 @@
     <a class="dropdown-item" href="#">Pahang</a>
     <a class="dropdown-item" href="#">Terengganu</a>
     <a class="dropdown-item" href="#">Kelantan</a>
-  </div>
+  </div><br><br>
 </div>
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Activity Type
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ route('gallerySelangorSightSeeing') }}">Sight Seeing</a>
+    <a class="dropdown-item" href="#">Relaxation</a>
+    <a class="dropdown-item" href="#">Cultural</a>
+    <a class="dropdown-item" href="#">Adventurous</a>
+  </div><br>
+</div>
+
+
 </body>
 
 <!-- About Page -->
-
-<div class="container">
-  <div class="card">
-    <div class="card-header">
-      <div class="row">
-        <div class="col-12 d-flex">
-          <h4 class="text-center">Destination</h4>
-        </div>
-      </div>
-    </div>
-      <div class="row card-body">
-        <div class="col-md-10 col-sm-12 mx-auto">
-          <p align='center'>
-          <table style="width:100%">
-            @foreach($destinations as $destination)
-            <tr>
-              <th>Destination Name</th>
-              <td>{{$destination->name}}</td>
-            </tr>
-            <tr>
-              <th>Destination Description</th>
-              <td>{{$destination->description}}</td>
-            </tr>
-            <tr>
-              <th>Destination Description</th>
-              <td>{{$destination->picture}}</td>
-            </tr>
-            <tr>
-              <th>Destination Picture</th>
-              <td><img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="Image"></td>
-            </tr>
-            @endforeach
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
   <div class="gallery__page">
     <div class="gallery__warp">
       <div class="row">
+        @foreach($destinations as $destination)
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/1601580973.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/1601580973.jpg" alt="">
+          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
+            <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
+            Name: {{ $destination->name }}<br>
+            Description: {{ $destination->description}}
+          </a>
+        </div>
+        {{--<div class="col-lg-3 col-md-4 col-sm-6">
+          <a class="gallery__item fresco" href="images/destinations/sunwaylagoon.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/sunwaylagoon.jpg" alt="image" width="500" height="375">
+    
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/2.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/2.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/zoonegara.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/zoonegara.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/3.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/3.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/pulauketam.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/pulauketam.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/4.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/4.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/kualaselangor.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/kualaselangor.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/5.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/5.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/batucaves.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/batucaves.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/6.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/6.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/fireflyparkresort.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/fireflyparkresort.jpg" alt="image" width="500" height="375">
+           
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/7.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/7.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/sekepingserendahretreat.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/sekepingserendahretreat.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/8.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/8.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/malaysiaagriculturepark.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/malaysiaagriculturepark.jpg" alt="image" width="500" height="375">
+            
           </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/9.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/9.jpg" alt="">
+          <a class="gallery__item fresco" href="images/destinations/mineswonderland.jpg" data-fresco-group="gallery">
+            <img src="images/destinations/mineswonderland.jpg" alt="image" width="500" height="375">
+            
           </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/10.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/10.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/11.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/11.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="img/gallery/12.jpg" data-fresco-group="gallery">
-            <img src="img/gallery/12.jpg" alt="">
-          </a>
-        </div>
+        </div>--}}
+        @endforeach
       </div>
     </div>
   </div>

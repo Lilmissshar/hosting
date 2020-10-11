@@ -5,6 +5,11 @@
 <div class="card bootstrap-table">
     <div class="card-body table-full-width">
       <div class="toolbar">
+        <a href="{{ route('admin.keyword.importExport') }}" class="m1-1">
+          <button class="btn btn-outline" style="border-radius: 30px">
+            <i class="glyphicon fa fa-upload"></i>
+          </button>
+        </a>
         <a href="{{ route('admin.keywords.create') }}" class="ml-1">
           <button class="btn btn-outline" style="border-radius: 30px">
             <i class="glyphicon fa fa-plus"></i>

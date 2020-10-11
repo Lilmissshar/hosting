@@ -15,7 +15,7 @@ class DestinationsService extends TransformerService{
 
 	public function all(Request $request){
 
-		$sort = $request->sort ? $request->sort : 'created_at'; 
+		$sort = $request->sort ? $request->sort : 'id'; 
 	    $order = $request->order ? $request->order : 'desc';
 	    $limit = $request->limit ? $request->limit : 10;
 	    $offset = $request->offset ? $request->offset : 0;
@@ -56,7 +56,7 @@ class DestinationsService extends TransformerService{
         $destination->type = $request->type;
 
         if ($request->file('image')){
-			$imageName = Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+			$imageName = $request->pictureName . '.' . $request->file('image')->getClientOriginalExtension();
 			$request->file('image')->move(public_path('images/destinations'), $imageName);
 			$destination->picture = $imageName;
 			$destination->save();
@@ -72,11 +72,11 @@ class DestinationsService extends TransformerService{
         	$destinationCategory->save();
         }
 
-        foreach($request->keyword_id as $id){
-        	$destinationCategory = new KeywordDestination();
-        	$destinationCategory->destination_id = $destination->id;
-        	$destinationCategory->keyword_id = $id;
-        	$destinationCategory->save();
+        foreach($request->keyword_id as $kid){
+        	$keywordCategory = new KeywordDestination();
+        	$keywordCategory->destination_id = $destination->id;
+        	$keywordCategory->keyword_id = $id;
+        	$keywordCategory->save();
         }
 
         return redirect()->route('admin.destinations.index');
@@ -105,6 +105,25 @@ class DestinationsService extends TransformerService{
 
 		$destination->category()->sync([]);
 		$destination->category()->sync($request->category_id);
+
+		foreach($request->keyword_id as $kid){
+        	$keywordCategory = new KeywordDestination();
+        	$keywordCategory->destination_id = $destination->id;
+        	$keywordCategory->keyword_id = $id;
+        	$keywordCategory->save();
+        }
+
+        $destination->keywords()->sync([]);
+		$destination->keywords()->sync($request->keyword_id);
+
+		if ($request->file('image')){
+			$imageName = $request->pictureName . '.' . $request->file('image')->getClientOriginalExtension();
+			$request->file('image')->move(public_path('images/destinations'), $imageName);
+			$destination->picture = $imageName;
+			$destination->save();
+		} else {
+			$destination->save();
+		}
 
 		return redirect()->route('admin.destinations.index');
 	}

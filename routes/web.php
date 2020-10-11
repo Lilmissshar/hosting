@@ -60,9 +60,24 @@ Route::prefix('admin')->group(function(){
 			Route::resource('categories','Admin\CategoriesController');
 			Route::resource('destinations', 'Admin\DestinationsController');
 			Route::resource('keywords', 'Admin\KeywordsController');
+			Route::resource('keywordDestinations', 'Admin\KeywordDestinationsController');
+			Route::resource('destinationCategories', 'Admin\DestinationCategoriesController');
+			//destination importexport
 			Route::get('importExport', 'Admin\DestinationsController@importExport')->name('destination.importExport');
 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel')->name('destination.downloadExcel');
 			Route::post('importExcel', 'Admin\DestinationsController@importExcel')->name('destination.importExcel');
+			//keyword importexport
+			Route::get('importExportKeyword', 'Admin\KeywordsController@importExport')->name('keyword.importExport');
+			Route::get('downloadExcelKeyword/{type}', 'Admin\KeywordsController@downloadExcel')->name('keyword.downloadExcel');
+			Route::post('importExcelKeyword', 'Admin\KeywordsController@importExcel')->name('keyword.importExcel');
+			//keyword destination import export
+			Route::get('importExportKeywordDestination', 'Admin\KeywordDestinationsController@importExport')->name('keywordDestination.importExport');
+			Route::get('downloadExcelKeywordDestination/{type}', 'Admin\KeywordDestinationsController@downloadExcel')->name('keywordDestination.downloadExcel');
+			Route::post('importExcelKeywordDestination', 'Admin\KeywordDestinationsController@importExcel')->name('keywordDestination.importExcel');
+			//destination categories import export
+			Route::get('importExportDestinationCategories', 'Admin\DestinationCategoriesController@importExport')->name('destinationCategory.importExport');
+			Route::get('downloadExcelDestinationCategories/{type}', 'Admin\DestinationCategoriesController@downloadExcel')->name('destinationCategory.downloadExcel');
+			Route::post('importExcelDestinationCategories', 'Admin\DestinationCategoriesController@importExcel')->name('destinationCategory.importExcel');
 
 		});
 	});
@@ -205,8 +220,10 @@ Route::get('/galleryPahangShopping', 'Client\GalleryController@galleryPahangShop
 Route::get('/recommendation', 'Client\RecommendationsController@datepicker')->name('datepicker');
 Route::post('/recommendation/date','Client\RecommendationsController@saveDate')->name('saveDate');
 Route::get('/recommendation/test', 'Client\RecommendationsController@test')->name('test');
-
-Route::get('/testtt', 'Client\RecommendationsController@viewTest')->name('testtt');
+Route::get('/destinationRecommendations', 'Client\RecommendationsController@viewDestinations')->name('destinationRecommendations');
+Route::post('/selectedDestinations', 'Client\RecommendationsController@saveChosenDestinations')->name('saveChosenDestinations');
+Route::get('/recommendation2', 'Client\RecommendationsController@showRecommendations')->name('showRecommendations');
+Route::get('/showDestinations', 'Client\RecommendationsController@showDestinations')->name('showDestinations');
 
 Route::resource('plans', 'Client\PlansController');
 

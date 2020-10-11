@@ -28,13 +28,19 @@
           <label>State
             <star class="star">*</star>
           </label>
-          {{ Form::select('state', array('Perak' => 'Perak', 'Penang' => 'Penang', 'KL' => 'Kuala Lumpur'), null, ['class' => 'form-control', 'required']) }}
+          {{ Form::select('state', array('johor' => 'Johor', 'Kedah' => 'Kedah', 'Kelantan' => 'Kelantan', 'KL' => 'KL', 'Melaka' => 'Melaka', 'Pahang' => 'Pahang', 'Penang' => 'Penang', 'Perak' => 'Perak', 'Perlis' => 'Perlis', 'Sabah' => 'Sabah', 'Sarawak' => 'Sarawak', 'Selangor' => 'Selangor', 'Terengganu' => 'Terengganu'), null, ['class' => 'form-control', 'required']) }}
         </div>
          <div class="form-group has-label">
           <label>Type
             <star class="star">*</star>
           </label>
           {{ Form::select('type', array('Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
+        </div>
+        <div class="form-group has-label">
+          <label>Picture Name
+            <star class="star">*</star>
+          </label>
+          {{ Form::text('pictureName', null, [ 'class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>Uploads

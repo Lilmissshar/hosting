@@ -10,13 +10,13 @@ class KeywordsService extends TransformerService{
 
 	public function all(Request $request){
 
-		$sort = $request->sort ? $request->sort : 'created_at'; //last parameter is the default
+		$sort = $request->sort ? $request->sort : 'id'; //last parameter is the default
 	    $order = $request->order ? $request->order : 'desc';
 	    $limit = $request->limit ? $request->limit : 10;
 	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search :'';
 
-	    $keywords = Keyword::where('name', 'like', "%{$query}%")->orderBy($sort, $order);
+	    $keywords = Keyword::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
 
 	    $listCount = $keywords->count();
 

@@ -25,7 +25,7 @@
 
 <script>
 	export default {
-		props: ['propKeyword'],
+		props: ['propKeywords'],
 		data: function() {
 			return {
 				keywords: [{

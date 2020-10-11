@@ -32,4 +32,11 @@ class GalleryController extends Controller{
 		return view($this->path . 'penang.galleryPenang', $penangsightsee);
 	}
 
+	public function gallerySelangor(Request $request){
+
+		$selangor = Destination::where('state', 'Selangor')->get();
+
+		return view($this->path . 'selangor.gallerySelangor', ['selangor' => $selangor]);
+	}
+
 }
