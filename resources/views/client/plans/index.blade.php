@@ -91,6 +91,8 @@ $i = 0;
         <td>{{ $plan['start_date'] }}</td>
         <td>{{ $plan['end_date'] }}</td>
         <td>{{ $plan['destinations'] }}</td>
+        
+        <td><a href="{{ route('plans.edit', $plan['id'])  }}">Edit</a></td>
       </tr> 
     @endforeach
   </table>

@@ -6,11 +6,15 @@ use App\Destination;
 use App\Destination_category;
 use App\KeywordDestination;
 use App\Keyword;
+use App\Plan;
+use App\Plan_destination;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Carbon\Carbon;
+
 
 class RecommendationsController extends Controller {
 
@@ -21,6 +25,16 @@ class RecommendationsController extends Controller {
 	}
 
 	public function saveDate(Request $request){
+
+
+		$start = Carbon::parse($request->start_date);
+		$end = Carbon::parse($request->end_date);
+	    $diff = $start->diffInDays($end);
+	    
+	    Session::put('diff', $diff);
+	    Session::put('name', $request->name);
+	    Session::put('startDate', $request->start_date);
+	    Session::put('endDate', $request->end_date);
 
 		// $data = [
 		// 	'startDate' => $request->startDate,
@@ -57,55 +71,14 @@ class RecommendationsController extends Controller {
 
 	}
 
-	// public function test(){
+	public function showDestinations(){
 
-		
-	// 	$start = Session::get('startDate');
-	// 	$end = Session::get('endDate');
+		$destinations = Session::get('destinations');
 
 
-		
-	// 	return view($this->path . 'saving', ['start' => $start, 'end' => $end]);
+		return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
 
-	// }
-
-	// public function viewTest(){
-
-	// 	$destinations = Destination::all();
-	// 	$start = Session::get('startDate');
-	// 	$end = Session::get('endDate');
-
-	// 	return view($this->path . 'testtt', ['destinations' => $destinations, 'start' => $start, 'end' => $end]);
-	// }
-
-	// public function viewDestinations(){
-
-	// 	$startDate = Session::get('startDate');
-	// 	$endDate = Session::get('endDate');
-	// 	$state = Session::get('state');
-	// 	$category = Session::get('category');
-		
-
-	// 	$destinations = Destination::where('state', $state)->whereHas('category', function($destinations) {
-	// 		$destinations->where('category_id', Session::get('category'));
-	// 	})->get();
-
-	// 	 // $appointments = Appointment::where('date', 'like', "%{$query}%")->whereHas('service_staff', function($appointments) {
-	// 		//     	$appointments->where('staff_id', current_user()->id);
-	// 		//     })->orderBy($sort, $order);
-	// 	// $test = Destination::where('state', $state)->whereHas('keywords', function($destinations) {
-	// 	// 	$destinations->where('keyword_id', 1);
-	// 	// })->whereHas('category', function($destinations) {
-	// 	// 	$destinations->where('category_id', 1);
-	// 	// })->get();
-	// 	// dd($test);
-
-	// 	Session::put('destinations', $destinations);
-
-	// 	return \App::call('App\Http\Controllers\Client\RecommendationsController@showDestinations');
-
-		// return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
-
+	}
 	
 
 	public function saveChosenDestinations(Request $request){
@@ -206,11 +179,24 @@ class RecommendationsController extends Controller {
 		
 		$u = array_unique($test);
 		$val = count($u);
-		$countDest = array_splice($u, 0, 15);
+		
+		$diff = Session::get('diff');
+
+		$days = array_chunk($u, 3);
+		$final = array_splice($days, 0, $diff);
+
+		Session::put('recommendations', $final);
+
+		
+	
+		// $place =
+		// $accomodation = 
+
+		// $countDest = array_splice($u, 0, 15);
 
 
 		// dd($countDest);	
-		// dd('d');
+	
 
 // $destinations = Destination::where('state', $state)->whereHas('category', function($destinations) {
 // 			$destinations->where('category_id', Session::get('category'));
@@ -239,9 +225,56 @@ class RecommendationsController extends Controller {
 
 		// }
 
-		return view($this->path . 'saving', ['keywords' => $countDest]);
+		return view($this->path . 'saving', ['keywords' => $final]);
 		
 	}
+
+	public function save(Plan $plan){
+
+		$recommendations = Session::get('recommendations');
+		
+
+		$plan = new Plan();
+		$plan->name = Session::get('name');
+		$plan->user_id = current_user()->id;
+		$plan->start_date = Session::get('startDate');
+		$plan->end_date = Session::get('endDate');
+		$plan->save();
+
+		$test = array();
+		$i = 0;
+		foreach ($recommendations as $recommendation){
+			$i++;
+			
+			foreach ($recommendation as $index => $id){
+				
+				$planDest = new Plan_destination();
+				$planDest->plan_id = $plan->id; 
+				$planDest->destination_id = $id->id;
+				$planDest->day = $i;
+				$planDest->save();
+			}
+
+		}
+
+		return redirect()->route('home');
+		
+	}
+
+
+ //  public function update(Request $request, PLan $plan){
+
+ //  	$data = $request->validate([
+	// 		'description' => 'required'	
+	// 	]);
+
+	// 	$appointment->review->description = $data['description'];
+	// 	$appointment->review->save();
+
+	// 	return redirect()->route('appointments.showAppointments');
+	// }
+
+  
 
 	// public function showRecommendations(){
 	// 	$start = Session::get('startDate');
@@ -249,13 +282,55 @@ class RecommendationsController extends Controller {
 
 	// }
 
-	public function showDestinations(){
+	// public function test(){
 
-		$destinations = Session::get('destinations');
+		
+	// 	$start = Session::get('startDate');
+	// 	$end = Session::get('endDate');
 
 
-		return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
+		
+	// 	return view($this->path . 'saving', ['start' => $start, 'end' => $end]);
 
-	}
+	// }
+
+	// public function viewTest(){
+
+	// 	$destinations = Destination::all();
+	// 	$start = Session::get('startDate');
+	// 	$end = Session::get('endDate');
+
+	// 	return view($this->path . 'testtt', ['destinations' => $destinations, 'start' => $start, 'end' => $end]);
+	// }
+
+	// public function viewDestinations(){
+
+	// 	$startDate = Session::get('startDate');
+	// 	$endDate = Session::get('endDate');
+	// 	$state = Session::get('state');
+	// 	$category = Session::get('category');
+		
+
+	// 	$destinations = Destination::where('state', $state)->whereHas('category', function($destinations) {
+	// 		$destinations->where('category_id', Session::get('category'));
+	// 	})->get();
+
+	// 	 // $appointments = Appointment::where('date', 'like', "%{$query}%")->whereHas('service_staff', function($appointments) {
+	// 		//     	$appointments->where('staff_id', current_user()->id);
+	// 		//     })->orderBy($sort, $order);
+	// 	// $test = Destination::where('state', $state)->whereHas('keywords', function($destinations) {
+	// 	// 	$destinations->where('keyword_id', 1);
+	// 	// })->whereHas('category', function($destinations) {
+	// 	// 	$destinations->where('category_id', 1);
+	// 	// })->get();
+	// 	// dd($test);
+
+	// 	Session::put('destinations', $destinations);
+
+	// 	return \App::call('App\Http\Controllers\Client\RecommendationsController@showDestinations');
+
+		// return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
+
+
 
 }

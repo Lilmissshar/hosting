@@ -79,12 +79,7 @@
         <ul>
     @endif
     <li>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $item->picture) }}" data-fresco-group="gallery">
-            <img src="{{ asset('images/destinations/' . $item->picture) }}" alt="image" width="500" height="375">
-            Name: {{ $item->name }}<br>
-            Description: {{ $item->description}}
-          </a>
+        Place: {{ $item->name}}
   
     </li>
     @if($loop->last == true)

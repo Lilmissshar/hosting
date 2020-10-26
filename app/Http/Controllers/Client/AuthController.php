@@ -26,7 +26,7 @@ class AuthController extends Controller{
 	  $user->save();
 	  Auth::login($user);
 
-	  return redirect()->route('home');
+	  return redirect()->intended();
 	}
 
 	public function viewLogin(){
@@ -40,7 +40,7 @@ class AuthController extends Controller{
 	  ]);
 
 	  if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 0])) {
-	    return redirect()->route('home');
+	    return redirect()->intended();
 	  }else{
 	    return redirect()->back()->withErrors(['message' => 'Email or password is incorrect']);
 	  }

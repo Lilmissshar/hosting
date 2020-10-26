@@ -8,7 +8,8 @@ class Plan_destination extends Model
 {
     protected $fillable = [
     	'plan_id',
-    	'destination_id'
+    	'destination_id',
+        'day'
     ];
 
     public function plans() {

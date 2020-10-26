@@ -30,7 +30,7 @@
                       <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                   </div>
               </div>
-              @elseif (current_user()->id == '1')
+              @elseif (current_user()->role == 1)
               <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                   <div class="header__switches">
                       <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
@@ -91,6 +91,12 @@
             <star class="star">*</star>
           </label>
           {{ Form::Date('end_date', null, ['class' => 'form-control', 'required']) }}
+        </div>
+        <div class="form-group has-label">
+          <label>Give a name
+            <star class="star">*</star>
+          </label>
+          {{ Form::text('name', null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>State

@@ -42,7 +42,7 @@
               @else
               <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                   <div class="header__switches">
-                  	<a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
+                    <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
                       <a class="nav-link" href="{{route('client.account.show')}}">
                         <i class="fa fa-cog"></i> Settings
                       </a>
@@ -71,9 +71,13 @@
   <br><br>
   <!-- Header Section end -->
 <center>
-	Here are the recommended places for your trips! <br><br>
-@foreach ($keywords as $items)
+    {!! Form::open(['route'=>['editSpecifics', $plan->id], 'class'=>'form', 'id'=>'form-validation']) !!}
+    Here are the recommended places for your trips! <br><br>
+
+@foreach ($days as $items)
 <b>Day: {{$loop->iteration}}</b><br>
+
+<td><a href="{{ route('editSpecifics', $loop->index)  }}">Edit</a></td>
 @foreach($items as $item)
     @if($loop->first)
         <ul>
@@ -93,7 +97,5 @@
 @endforeach
 @endforeach
 
-<br>
-<a href="{{ route('destinations.save')}}">Click here to save this plan!</a>
-</center>
+{!! Form::close() !!}
 @endsection

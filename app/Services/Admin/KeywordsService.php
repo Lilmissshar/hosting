@@ -12,15 +12,11 @@ class KeywordsService extends TransformerService{
 
 		$sort = $request->sort ? $request->sort : 'id'; //last parameter is the default
 	    $order = $request->order ? $request->order : 'desc';
-	    $limit = $request->limit ? $request->limit : 10;
-	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search :'';
 
 	    $keywords = Keyword::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
 
 	    $listCount = $keywords->count();
-
-	    $keywords = $keywords->limit($limit)->offset($offset);
 	    
 	    $ids = json_decode($request->ids); //jsondecode (from string to array)
 

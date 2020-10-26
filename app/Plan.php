@@ -16,10 +16,14 @@ class Plan extends Model
     ];
 
     public function destinations() {
-    	return $this->belongsToMany('App\Destination', 'plan_destinations', 'plan_id', 'destination_id');
+    	return $this->belongsToMany('App\Destination', 'plan_destinations', 'plan_id', 'destination_id', 'day');
     }
 
     public function users() {
     return $this->belongsTo('App\User');
+  }
+
+  public function reviews() {
+    return $this->hasMany('App\Reviews');
   }
 }

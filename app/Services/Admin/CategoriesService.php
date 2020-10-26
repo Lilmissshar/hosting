@@ -12,7 +12,7 @@ class CategoriesService extends TransformerService{
 
 		$sort = $request->sort ? $request->sort : 'created_at'; //last parameter is the default
 	    $order = $request->order ? $request->order : 'desc';
-	    $limit = $request->limit ? $request->limit : 10;
+	    $limit = $request->limit ? $request->limit : 50;
 	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search :'';
 

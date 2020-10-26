@@ -62,6 +62,7 @@ Route::prefix('admin')->group(function(){
 			Route::resource('keywords', 'Admin\KeywordsController');
 			Route::resource('keywordDestinations', 'Admin\KeywordDestinationsController');
 			Route::resource('destinationCategories', 'Admin\DestinationCategoriesController');
+			Route::resource('reviews', 'Admin\ReviewsController');
 			//destination importexport
 			Route::get('importExport', 'Admin\DestinationsController@importExport')->name('destination.importExport');
 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel')->name('destination.downloadExcel');
@@ -224,8 +225,17 @@ Route::get('/destinationRecommendations', 'Client\RecommendationsController@view
 Route::post('/selectedDestinations', 'Client\RecommendationsController@saveChosenDestinations')->name('saveChosenDestinations');
 Route::get('/recommendation2', 'Client\RecommendationsController@showRecommendations')->name('showRecommendations');
 Route::get('/showDestinations', 'Client\RecommendationsController@showDestinations')->name('showDestinations');
+Route::get('/save', 'Client\RecommendationsController@save')->name('destinations.save');
+Route::get('/editDestinations', 'Client\PlansController@editDestinations')->name('editDestinations');
+Route::post('/chosen', 'Client\PlansController@chosen')->name('chosen');
+Route::get('/editArray', 'Client\PlansController@editDay')->name('editDay');
+Route::get('/editSpecifics/{loop}', 'Client\PlansController@editSpecifics')->name('editSpecifics');
+Route::get('/savingEdit', 'Client\PlansController@savingEdit')->name('savingEdit');
+Route::resource('dests', 'Client\DestinationsController');
+
 
 Route::resource('plans', 'Client\PlansController');
+Route::resource('reviews', 'Client\ReviewsController');
 
 // Route::get('importExport', 'Admin\DestinationsController@importExport');
 // 			Route::get('downloadExcel/{type}', 'Admin\DestinationsController@downloadExcel');

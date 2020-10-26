@@ -12,7 +12,7 @@ class PlansService extends TransformerService{
 	protected $path = 'client.plans.';
 
 	public function all(){
-		$plans = Plan::where('user_id', current_user()->id)->paginate(10);
+		$plans = Plan::where('user_id', current_user()->id)->paginate(15);
 		$plans->getCollection()->transform(function($plan) {
 			return $this->transform($plan);
 		});
@@ -20,6 +20,8 @@ class PlansService extends TransformerService{
 		return view($this->path . 'index', ['plans' => $plans]);
 		
 	}
+
+
 
 	public function store(Request $request){
 
@@ -65,4 +67,5 @@ class PlansService extends TransformerService{
 			'destinations' => $this->transformDestination($plan->destinations)
 		];
 	}
+
 }

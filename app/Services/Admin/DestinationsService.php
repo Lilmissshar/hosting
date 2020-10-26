@@ -17,11 +17,15 @@ class DestinationsService extends TransformerService{
 
 		$sort = $request->sort ? $request->sort : 'id'; 
 	    $order = $request->order ? $request->order : 'desc';
-	    $limit = $request->limit ? $request->limit : 10;
+	    $limit = $request->limit ? $request->limit : 50;
 	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search : '';
 
-	    $destinations = Destination::where('id', 'like', "%{$query}%")->orderBy($sort, $order);
+	    $destinations = Destination::where('state', 'like', "%{$query}%")->orWhereHas('category', function($q) use($query){
+	    	$q->where('name', 'like', "%{$query}%");
+	    })->orWhereHas('keywords', function($w) use($query){
+	    	$w->where('name', 'like', "%{$query}%");
+	    })->orderBy($sort, $order);
 	    $listCount = $destinations->count();
 
 	    $destinations = $destinations->limit($limit)->offset($offset);
