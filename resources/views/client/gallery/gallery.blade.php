@@ -85,7 +85,7 @@ Gallery
     <a class="dropdown-item" href="#">Kedah</a>
     <a class="dropdown-item" href="#">Johor</a>
     <a class="dropdown-item" href="#">Melaka</a>
-    <a class="dropdown-item" href="#">Selangor</a>
+    <a class="dropdown-item" href="{{ route('gallerySelangor') }}">Selangor</a>
     <a class="dropdown-item" href="#">Kuala Lumpur</a>
     <a class="dropdown-item" href="#">Sabah</a>
     <a class="dropdown-item" href="#">Sarawak</a>
@@ -100,7 +100,7 @@ Gallery
     Activity Type
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{ route('gallerySelangorSightSeeing') }}">Sight Seeing</a>
+    <a class="dropdown-item" href="{{ route('galleryPenangSightSeeing') }}">Sight Seeing</a>
     <a class="dropdown-item" href="#">Relaxation</a>
     <a class="dropdown-item" href="#">Cultural</a>
     <a class="dropdown-item" href="#">Adventurous</a>
@@ -110,8 +110,10 @@ Gallery
 
 </body>
 
+{{--<gallery-component prop-destinations="{{ $destinations }}"></gallery-component>--}}
+
 <!-- About Page -->
-  <div class="gallery__page">
+<div class="gallery__page">
     <div class="gallery__warp">
       <div class="row">
         @foreach($destinations as $destination)
@@ -122,64 +124,12 @@ Gallery
             Description: {{ $destination->description}}
           </a>
         </div>
-        {{--<div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/sunwaylagoon.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/sunwaylagoon.jpg" alt="image" width="500" height="375">
-    
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/zoonegara.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/zoonegara.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/pulauketam.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/pulauketam.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/kualaselangor.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/kualaselangor.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/batucaves.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/batucaves.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/fireflyparkresort.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/fireflyparkresort.jpg" alt="image" width="500" height="375">
-           
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/sekepingserendahretreat.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/sekepingserendahretreat.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/malaysiaagriculturepark.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/malaysiaagriculturepark.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="images/destinations/mineswonderland.jpg" data-fresco-group="gallery">
-            <img src="images/destinations/mineswonderland.jpg" alt="image" width="500" height="375">
-            
-          </a>
-        </div>--}}
         @endforeach
       </div>
     </div>
   </div>
   <!-- About Page end -->
 </body>
-@endsection
+@endsection('content')
+
+

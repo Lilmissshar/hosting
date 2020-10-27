@@ -1,6 +1,7 @@
 @extends('layouts.client.master') 
 
 @section('content')
+
 EditDestinations
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
@@ -75,11 +76,12 @@ EditDestinations
   <!-- Header Section end -->
 
 <body>
+
    {!! Form::open(['route' => 'chosen', 'class' => 'form', 'id' => 'form-validation']) !!}
   <div class="gallery__page">
     <div class="gallery__warp">
       <div class="row">
-        @foreach($destinations as $destination)
+        @foreach($choices as $destination)
         <div class="col-lg-3 col-md-4 col-sm-6">
           <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
             <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">

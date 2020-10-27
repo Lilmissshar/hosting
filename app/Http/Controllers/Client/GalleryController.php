@@ -19,24 +19,24 @@ class GalleryController extends Controller{
 
 	public function galleryPenang(Request $request){
 
-		$penang = Destination::where('state', 'Penang')->get();
+
+		$destinations = Destination::where('state', 'Penang')->get();
 		
-		return view($this->path . 'penang.galleryPenang',['penang'=> $penang]);
+		return view($this->path . 'gallery', ['destinations'=> $destinations]);
 	}
 
 	public function galleryPenangSightSeeing(){
 
-		$penangsightsee = Destination::where('state', 'Penang')->where('type', 'Sight-see')->get();
-		dd($penangsightsee);
+		$destinations = Destination::where('state', 'Penang')->where('type', 'Sight-see')->get();
 
-		return view($this->path . 'penang.galleryPenang', $penangsightsee);
+		return view($this->path . 'gallery', $destinations);
 	}
 
 	public function gallerySelangor(Request $request){
 
-		$selangor = Destination::where('state', 'Selangor')->get();
-
-		return view($this->path . 'selangor.gallerySelangor', ['selangor' => $selangor]);
+		$destinations = Destination::where('state', 'Selangor')->get();
+		
+		return view($this->path . 'gallery', ['destinations'=> $destinations]);
 	}
 
 }

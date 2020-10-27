@@ -45,15 +45,35 @@ class PlansController extends Controller
 
     public function editDay(Plan $plan, Request $request){
         $plan = Session::get('plan');
-        $planDest = Plan_destination::with(['plans', 'destinations'])->where('plan_id', $plan->id)->orderBy('day', 'desc')->get();
-        
-        dd($planDest);
+        $planDest = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->get();
 
-        foreach ($planDest as $d){
-            // dd($d->day);
-        }
+        return view($this->path . 'editting', ['planDest' => $planDest]);   
+
+        // $ar = array();
+        // foreach ($planDest as $p){
+        //     $ar[] = $p;
+        // }
+
+        // $ar2 = array();
+
+        // foreach ($ar as $a){
+        //     $planDest = Destination::where('id', $a->id)->get();
+        //     $ar2[] = $planDest;
+        // }
+
+        //ar2 has the list of destinations
+
+
         
-        dd($planDest);
+        // $p = Plan_destination::where('id', $plan->id)->whereHas('destinations', function ($p) {
+        //     $p->orderBy('day');
+        // })->get();
+        
+        // $d = Plan_destination::where('plan_id', $plan->id)->whereHas('destinations', function ($d){
+        //     $d->pluck('name');
+        // })->get();
+
+      
       
 
 
@@ -95,93 +115,75 @@ class PlansController extends Controller
         // }
         // // dd($ar[2]);
 
-        return view($this->path . 'editting', ['days' => $chunk, 'plan'=> $plan]);        
+             
 
     }
 
     public function editDestinations(){
-
-        $plan = Session::get('plan');
-        $loop = session()->get('loop');
-        $dest = Session::get('chunk');
-      
-        $in = $dest[$loop];
-
-        $d = array();
-        foreach ($in as $i){
-            $d[] = $i->id;
-        }
-
-       $finalized = Destination::whereNotIn('id', $d)->get();
-        
-        
-        // $destination = Destination::
        
+       $choices = session()->get('choices');
 
-        return view($this->path . 'edit', ['destinations' => $finalized, 'plan' => $plan, 'loop' => $loop]);
+        return view($this->path . 'edit', ['choices' => $choices]);
     }
 
-    public function editSpecifics($loop){
-        Session::put('index', $loop);
-        Session::get('index');
+
+
+    public function editSpecifics($id){
+
+        $q = Plan_destination::where('id', $id)->first();
+
+        Session::put('id', $id);
+
+        $choices = Destination::where('id', '!=', $q->destination_id)->get();
        
-       return redirect()->route('editDestinations')->with(['loop' => $loop]);
+       return redirect()->route('editDestinations')->with(['choices' => $choices]);
 
 
 
     }
 
     public function chosen(Request $request){
+        
+        $id = Session::get('id');
+
         $chosenDestinations = $request->destination;
+
         
         $validator = Validator::make($request->all(), [
-        'destination' => 'min:1|max:3'
+        'destination' => 'min:1|max:1'
         ]);
 
         if (!empty($chosenDestinations)){
             if ($validator->fails()) {
-            return response()->json('You must enter 1 to 3 choices', 422);
+            return response()->json('You must enter 1 choice only', 422);
             }
         } else {
         return response()->json('Cannot be empty', 422);
         }
 
         if ($validator->fails()) {
-            return response()->json('You must enter 1 to 3 choices', 422);
+            return response()->json('You must enter 1 choice only', 422);
         }
+
+        $data = Plan_destination::find($id);
+        $data->destination_id = $chosenDestinations[0];
+        $data->save();
+
         
-        return redirect()->route('savingEdit')->with(['chosen' => $chosenDestinations]);
+        return redirect()->route('plans.index');
 
     }
 
-    public function savingEdit(){
-        $chosen = session()->get('chosen');
-        $loop = Session::get('index');
-        $plan = Session::get('plan');
-        $chunk = Session::get('chunk');
-        $insert = $chunk[$loop];
-    
-    
+    public function editAdd(){
 
-        foreach($chosen as $id){
-            $planDest = new Plan_destination();
-            $planDest->plan_id = $plan->id;
-            $planDest->destination_id = $id;
-            $planDest->day = $loop+1;
-            $planDest->save();
+        Destination::all();
 
-            // $plan->services()->sync([]);
-            // $plan->destinations()->sync($chosen);
-        
-        }
-        
-
-        // $plan->destinations()->sync($chosen);
-        return redirect()->route('home');
+        return view($this->path . 'addNew');
     }
 
-  public function update(Request $request, Plan $plan){
-    return $this->planService->update($request, $plan);
+  public function storeEditAdd(){
+
+
   }
 
 

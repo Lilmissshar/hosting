@@ -226,11 +226,12 @@ Route::post('/selectedDestinations', 'Client\RecommendationsController@saveChose
 Route::get('/recommendation2', 'Client\RecommendationsController@showRecommendations')->name('showRecommendations');
 Route::get('/showDestinations', 'Client\RecommendationsController@showDestinations')->name('showDestinations');
 Route::get('/save', 'Client\RecommendationsController@save')->name('destinations.save');
-Route::get('/editDestinations', 'Client\PlansController@editDestinations')->name('editDestinations');
+Route::get('/editDestinations/', 'Client\PlansController@editDestinations')->name('editDestinations');
 Route::post('/chosen', 'Client\PlansController@chosen')->name('chosen');
 Route::get('/editArray', 'Client\PlansController@editDay')->name('editDay');
-Route::get('/editSpecifics/{loop}', 'Client\PlansController@editSpecifics')->name('editSpecifics');
-Route::get('/savingEdit', 'Client\PlansController@savingEdit')->name('savingEdit');
+Route::get('/editSpecifics/{id}', 'Client\PlansController@editSpecifics')->name('editSpecifics');
+Route::get('/addNew', 'Client\PlansController@editAdd')->name('editAdd');
+Route::post('/addNew', 'Client\PlansController@storeEditAdd')->name('storeEditAdd');
 Route::resource('dests', 'Client\DestinationsController');
 
 

@@ -73,33 +73,37 @@ $i = 0;
         </div>
     </header>
     <!-- Header Section end -->
-<div class="container">
-  <table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Destination</th>
-    </tr>
-  </thead>
-    @foreach ($plans as $plan)
-      <tr>
-        <td>{{ $plans->firstItem() + $i++ }}</td>
-        <td>{{ $plan['name'] }}</td>
-        <td>{{ $plan['start_date'] }}</td>
-        <td>{{ $plan['end_date'] }}</td>
-        <td>{{ $plan['destinations'] }}</td>
-        
-        <td><a href="{{ route('plans.edit', $plan['id'])  }}">Edit</a></td>
-      </tr> 
-    @endforeach
-  </table>
-   <div class="d-flex">
-    <div class="mx-auto">
-      {{ $plans->links() }}
+
+<div class="card bootstrap-table">
+    <div class="card-body table-full-width">
+      <div class="toolbar">
+      </div>
+      <table id="bootstrap-table" class="table">
+        <thead class="thead-dark">
+          <th>ID</th>
+          <th>Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Destination</th>
+          <th>Edit</th>
+        </thead>
+        @foreach ($plans as $plan)
+          <tr>
+            <td>{{ $plans->firstItem() + $i++ }}</td>
+            <td>{{ $plan['name'] }}</td>
+            <td>{{ $plan['start_date'] }}</td>
+            <td>{{ $plan['end_date'] }}</td>
+            <td>{{ $plan['destinations'] }}</td>
+            
+            <td><a href="{{ route('plans.edit', $plan['id'])  }}">Edit</a></td>
+          </tr> 
+        @endforeach
+      </table>
+      <div class="d-flex">
+        <div class="mx-auto">
+          {{ $plans->links() }}
+        </div>
+    </div>
     </div>
   </div>
-</div>
 @endsection('content')

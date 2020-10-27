@@ -15,7 +15,7 @@ class Destination extends Model
     ];
 
     public function plans() {
-    	return $this->belongsToMany('App\Plan', 'plan_destinations', 'plan_id', 'destination_id', 'day');
+    	return $this->belongsToMany('App\Plan', 'plan_destinations', 'plan_id', 'destination_id');
     }
 
     public function category() {

@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('forms-component', require('../components/FormsComponent.vue')); //register the components created. 
 Vue.component('museums-component', require('../components/MuseumsComponent.vue'));
+Vue.component('gallery-component', require('../components/GalleryComponent.vue'));
 //first parameter is the name that will be used by the component, second parameter is where it will be controlled at
 
 const app = new Vue({

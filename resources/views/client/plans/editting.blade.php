@@ -70,32 +70,40 @@
   </header>
   <br><br>
   <!-- Header Section end -->
-<center>
-    {!! Form::open(['route'=>['editSpecifics', $plan->id], 'class'=>'form', 'id'=>'form-validation']) !!}
-    Here are the recommended places for your trips! <br><br>
 
-@foreach ($days as $items)
-<b>Day: {{$loop->iteration}}</b><br>
-
-<td><a href="{{ route('editSpecifics', $loop->index)  }}">Edit</a></td>
-@foreach($items as $item)
-    @if($loop->first)
-        <ul>
-    @endif
-    <li>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $item->picture) }}" data-fresco-group="gallery">
-            <img src="{{ asset('images/destinations/' . $item->picture) }}" alt="image" width="500" height="375">
-            Name: {{ $item->name }}<br>
-            Description: {{ $item->description}}
-          </a>
-  
-    </li>
-    @if($loop->last == true)
-        </ul>
-    @endif
-@endforeach
-@endforeach
-
-{!! Form::close() !!}
+  <div class="card bootstrap-table">
+    <div class="card-body table-full-width">
+      <div class="toolbar">
+        <a href="{{ route('editAdd') }}" class="ml-1">
+          <button class="btn btn-outline" style="border-radius: 30px">
+            <i class="glyphicon fa fa-plus"></i>
+          </button>
+        </a>
+      </div>
+      <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Day</th>
+      <th>Dest</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+    @foreach ($planDest as $plan)
+      <tr>
+       
+        <td>{{ $plan->id }}</td>
+        <td>{{ $plan->day }}</td>
+        <td>{{ \App\Destination::where(['id' => $plan->destination_id])->pluck('name')->first() }}</td>
+        <td><a href="{{ route('editSpecifics', $plan->id) }}">Edit</a></td>
+        <td><a href="">Delete</a></td>
+        
+        
+      </tr> 
+    @endforeach
+  </table>
+    </div>
+  </div>
 @endsection
+
