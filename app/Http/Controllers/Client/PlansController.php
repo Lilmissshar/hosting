@@ -45,10 +45,12 @@ class PlansController extends Controller
 
     public function editDay(Plan $plan, Request $request){
         $plan = Session::get('plan');
-        $planDest = Plan_destination::with(['plans', 'destinations'])->where('plan_id', $plan->id)->get();
+        $planDest = Plan_destination::with(['plans', 'destinations'])->where('plan_id', $plan->id)->orderBy('day', 'desc')->get();
         
+        dd($planDest);
+
         foreach ($planDest as $d){
-            dd($d->day);
+            // dd($d->day);
         }
         
         dd($planDest);
