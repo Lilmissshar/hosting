@@ -3,6 +3,7 @@
 namespace App\Services\Client;
 
 use App\Plan;
+use App\Review;
 use App\Plan_destination;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
@@ -20,8 +21,6 @@ class PlansService extends TransformerService{
 		return view($this->path . 'index', ['plans' => $plans]);
 		
 	}
-
-
 
 	public function store(Request $request){
 
@@ -56,15 +55,28 @@ class PlansService extends TransformerService{
 
     }
 
+    public function transformReview($reviews){
+    	$rs = [];
+
+    	foreach ($reviews as $review) {
+    		array_push($rs, $review->review);
+    	}
+
+
+    	return implode(',', $rs);
+    }
+
 
 	public function transform($plan){
+
 		return [
 			'id' => $plan->id,
 			'name' => $plan->name,
 			'user_id' => $plan->user_id,
 			'start_date' =>$plan->start_date,
 			'end_date' =>$plan->end_date,
-			'destinations' => $this->transformDestination($plan->destinations)
+			'destinations' => $this->transformDestination($plan->destinations),
+			'reviews' => $this->transformReview($plan->reviews)
 		];
 	}
 

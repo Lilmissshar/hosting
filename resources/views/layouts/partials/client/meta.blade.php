@@ -19,23 +19,23 @@
       <meta name="keywords" content="photo, html">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Stylesheets -->
-      <link rel="stylesheet" href="css/bootstrap.min.css"/>
+      {{-- <link rel="stylesheet" href="css/bootstrap.min.css"/>
       <link rel="stylesheet" href="css/font-awesome.min.css"/>
       <link rel="stylesheet" href="css/slicknav.min.css"/>
       <link rel="stylesheet" href="css/fresco.css"/>
       <link rel="stylesheet" href="css/slick.css"/>
 
       <!-- Main Stylesheets -->
-      <link rel="stylesheet" href="css/style.css"/>
+      <link rel="stylesheet" href="css/style.css"/>--}}
 
-<!--       <link href="{{ asset('css/style.css') }}" rel="stylesheet"> -->
-<!-- 
+      <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
       <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
       <link href="{{ asset('css/slicknav.min.css') }}" rel="stylesheet">
       <link href="{{ asset('css/fresco.css') }}" rel="stylesheet">
       <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
- -->
+
 
 
       <!--[if lt IE 9]>
@@ -52,18 +52,26 @@
         </div>
 
       <!-- Scripts -->
-      <!-- <script src="{{ asset('js/client.js') }}"></script>
-      @yield('scripts') -->
+     {{--<script src="{{ asset('js/client.js') }}"></script>
+      @yield('scripts')--}}
       <!--====== Javascripts & Jquery ======-->
     <script src="{{ asset('js/client.js') }}"></script>
     <script src="https://js.stripe.com/v3/"></script>
 
-    <script src="js/vendor/jquery-3.2.1.min.js"></script>
+    {{--<script src="js/vendor/jquery-3.2.1.min.js"></script>
     <script src="js/jquery.slicknav.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/fresco.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js"></script>--}}
+
+    <script src="{{ asset('js/vendor/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.min.js') }}"></script>
+    <script src="{{ asset('js/slick.min.js') }}"></script>
+    <script src="{{ asset('js/fresco.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     @yield('scripts')
 
     </body>
 </html>
+
+{{--the only changes made are adding the curly braces and asset, the previous are all commented--}}

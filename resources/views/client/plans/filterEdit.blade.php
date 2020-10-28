@@ -76,27 +76,7 @@ EditDestinations
   <!-- Header Section end -->
 
 <body>
-<div>
-  <label>Wanna apply a filter?</label><br><br>
-    {!! Form::open(['route' => 'filterEditSpecifics', 'class' => 'form', 'id' => 'form-validation']) !!}
-    <div class="form-group has-label">
-      <label>State
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('state', array('johor' => 'Johor', 'Kedah' => 'Kedah', 'Kelantan' => 'Kelantan', 'KL' => 'KL', 'Melaka' => 'Melaka', 'Pahang' => 'Pahang', 'Penang' => 'Penang', 'Perak' => 'Perak', 'Perlis' => 'Perlis', 'Sabah' => 'Sabah', 'Sarawak' => 'Sarawak', 'Selangor' => 'Selangor', 'Terengganu' => 'Terengganu'), null, ['class' =>  'required']) }}
-    </div>
-     <div class="form-group has-label">
-      <label>Type
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('type', array('None' => 'None', 'Cultural' => 'Cultural', 'Adventurous' => 'Adventurous', 'Food' => 'Food', 'Relaxation' => 'Relaxation', 'Shopping' => 'Shopping', 'SightSeeing' => 'SightSeeing'), null, ['class' => 'required']) }}
-    </div>
-    
-      <button type="submit" class="btn btn-info btn-fill btn-wd">Apply filter</button>
-    
-
-  {!! Form::close() !!}
-</div>
+ <a href="#">Go back</a>
 
    {!! Form::open(['route' => 'chosen', 'class' => 'form', 'id' => 'form-validation']) !!}
   <div class="gallery__page">

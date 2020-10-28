@@ -60,13 +60,24 @@ class PlansService extends TransformerService{
 
     }
 
+    public function transformReview($reviews){
+    	$rs = [];
+
+    	foreach ($reviews as $review) {
+    		array_push($rs, $review->review);
+    	}
+
+    	return implode(',', $rs);
+    }
+
 
 	public function transform($plan){
 		return [
 			'id' => $plan->id,
 			'name' => $plan->name,
 			'user_id' => $plan->user_id,
-			'destinations' => $this->transformDestination($plan->destinations)
+			'destinations' => $this->transformDestination($plan->destinations),
+			'reviews' => $this->transformReview($plan->reviews)
 		];
 	}
 }

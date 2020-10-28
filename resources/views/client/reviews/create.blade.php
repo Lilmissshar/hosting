@@ -1,20 +1,18 @@
-@extends('layouts.client.master') 
+@extends('layouts.client.master')
 
 @section('content')
 
-EditDestinations
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+ <?php
+$i = 0;
+?>
 
 <!-- Page Preloder -->
-  <div id="preloder">
+<div id="preloder">
     <div class="loader"></div>
-  </div>
+</div>
 
-  <!-- Header Section -->
-  <header class="header">
+<!-- Header Section -->
+<header class="header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4 col-md-3 order-2 order-sm-1">
@@ -37,7 +35,7 @@ EditDestinations
                         <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
-                @elseif (current_user()->role == '1')
+                @elseif (current_user()->id == '1')
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
@@ -48,6 +46,7 @@ EditDestinations
                 @else
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
+                        <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
                         <a class="nav-link" href="{{route('client.account.show')}}">
                           <i class="fa fa-cog"></i> Settings
                         </a>
@@ -60,7 +59,7 @@ EditDestinations
             </div>
             <nav class="main__menu">
                 <ul class="nav__menu">
-                    <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
+                    <li><a href="{{ route('home') }}" class="menu--active">Home</a></li>
                     <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
                    <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
                     {{--<li><a href="./blog.html">Blog</a>
@@ -73,55 +72,29 @@ EditDestinations
             </nav>
         </div>
     </header>
-  <!-- Header Section end -->
+    <!-- Header Section end -->
 
-<body>
-<div>
-  <label>Wanna apply a filter?</label><br><br>
-    {!! Form::open(['route' => 'filterEditSpecifics', 'class' => 'form', 'id' => 'form-validation']) !!}
-    <div class="form-group has-label">
-      <label>State
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('state', array('johor' => 'Johor', 'Kedah' => 'Kedah', 'Kelantan' => 'Kelantan', 'KL' => 'KL', 'Melaka' => 'Melaka', 'Pahang' => 'Pahang', 'Penang' => 'Penang', 'Perak' => 'Perak', 'Perlis' => 'Perlis', 'Sabah' => 'Sabah', 'Sarawak' => 'Sarawak', 'Selangor' => 'Selangor', 'Terengganu' => 'Terengganu'), null, ['class' =>  'required']) }}
-    </div>
-     <div class="form-group has-label">
-      <label>Type
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('type', array('None' => 'None', 'Cultural' => 'Cultural', 'Adventurous' => 'Adventurous', 'Food' => 'Food', 'Relaxation' => 'Relaxation', 'Shopping' => 'Shopping', 'SightSeeing' => 'SightSeeing'), null, ['class' => 'required']) }}
-    </div>
-    
-      <button type="submit" class="btn btn-info btn-fill btn-wd">Apply filter</button>
-    
-
-  {!! Form::close() !!}
-</div>
-
-   {!! Form::open(['route' => 'chosen', 'class' => 'form', 'id' => 'form-validation']) !!}
-  <div class="gallery__page">
-    <div class="gallery__warp">
-      <div class="row">
-        @foreach($choices as $destination)
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
-            <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
-            Name: {{ $destination->name }}<br>
-            Description: {{ $destination->description}}
-          </a>
-          {{ Form::radio('destination', $destination->id, true)}}
-          {{--<input class="single-checkbox" type="checkbox" name="destination[]" value="{{ $destination->id }}">--}}
+<div class="col-md-4 col-sm-6 ml-auto mr-auto">
+    {!! Form::model($review, ['route' => ['reviews.store', $review->id], 'id' => 'form-validation', 'class' => 'form form__submit']) !!}
+      <div class="card card-login card-hidden">
+        <div class="card-header">
+          <h4 class="header text-center">Review Form</h4>
         </div>
-        @endforeach
+        <div class="card-body ">
+          <div class="form-group has-label">
+            <label>How was your overall experience?
+              <star class="star">*</star>
+            </label>
+            {{ Form::radio('review', '5', true, ['id' => 'form-validation', 'class' => 'form-control', 'required' => true]) }}
+          </div>
+          <div class="card-category form-category">
+            <star class="star">*</star> Required fields
+          </div>
+        </div>
+        <div class="registerButton text-center">
+          <button type="submit" class="btn btn-wd btn-primary">Send</button>
+        </div>
       </div>
-      <div class="card-footer text-right">
-          <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
-        </div>
-        {!! Form::close() !!}
-    </div>
+    {!! Form::close() !!}
   </div>
-</body>
-
-@endsection
-
-
+@endsection('content')

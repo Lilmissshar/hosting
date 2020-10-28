@@ -17,6 +17,7 @@
           <th data-field="name">Plan Name</th>
           <th data-field="user_id">User ID</th>
           <th data-field="destinations">Destinations</th>
+          <th data-field="reviews">Reviews</th>
          </th>
          <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>

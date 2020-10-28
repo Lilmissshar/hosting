@@ -24,6 +24,6 @@ class Plan extends Model
   }
 
   public function reviews() {
-    return $this->hasMany('App\Reviews');
+    return $this->hasMany('App\Review');
   }
 }

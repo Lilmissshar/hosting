@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Destination;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
 
 class GalleryController extends Controller{
 
@@ -17,26 +18,20 @@ class GalleryController extends Controller{
 		return view($this->path . 'gallery', ['destinations' => $destinations]);
 	}
 
-	public function galleryPenang(Request $request){
+	public function filter(Request $request){
 
+		// dd($request->state);
 
-		$destinations = Destination::where('state', 'Penang')->get();
-		
-		return view($this->path . 'gallery', ['destinations'=> $destinations]);
-	}
+		$state = $request->state;
+		$type = $request->type;
 
-	public function galleryPenangSightSeeing(){
+		if ($type == 'None'){
+			$filter = Destination::where('state', $state)->get();
+		} else {
+			$filter = Destination::where('state', $state)->where('type', $type)->get();
+		}
 
-		$destinations = Destination::where('state', 'Penang')->where('type', 'Sight-see')->get();
-
-		return view($this->path . 'gallery', $destinations);
-	}
-
-	public function gallerySelangor(Request $request){
-
-		$destinations = Destination::where('state', 'Selangor')->get();
-		
-		return view($this->path . 'gallery', ['destinations'=> $destinations]);
+		return view($this->path . 'filter', ['destinations' => $filter]);
 	}
 
 }

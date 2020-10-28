@@ -2,42 +2,47 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Plan;
+use App\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Client\PlansService; 
+use Session;
 
 class ReviewsController extends Controller
 {
-    protected $path = 'admin.plans.';
-    protected $plansService;
+    protected $path = 'client.reviews.';
+    
+    public function index(Review $review, $id){
 
-    public function __construct(PlansService $plansService){
-        $this->planService = $plansService;
-      } 
+      Session::put('plan_id', $id);
 
-    public function index(Request $request){
-      if ($request->isJson()) {
-        return $this->planService->all($request);
-      }
-      return view($this->path . 'index');
+      return redirect()->route('reviews.create');
+      
     }
 
-    public function create()
+    public function create(Review $review){
+
+      return view($this->path . 'index', ['review' => $review]);
+    }
+ 
+
+
+    public function store(Request $request, Review $review)
     {
-      return view($this->path . 'create');
+
+      $plan_id = Session::get('plan_id');
+
+      $review = new Review();
+      $review->user_id = current_user()->id;
+      $review->plan_id = $plan_id;
+      $review->review = $request->review;
+      $review->save();
+
+      return redirect()->route('plans.index');
+
+
+      
     }
 
-    public function store(Request $request)
-    {
-      return $this->planService->store($request);
-    }
-
-    // public function edit(Plan $plan) {
-    //   $destination = $plan->destinations;
-    //   dd($destination);
-
-    // }
 
 
 }

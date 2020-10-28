@@ -74,18 +74,41 @@ Gallery
     </header>
   <!-- Header Section end -->
 <body>
-<div class="dropdown">
+
+<div>
+  <label>Wanna apply a filter?</label><br><br>
+    {!! Form::open(['route' => 'filter', 'class' => 'form', 'id' => 'form-validation']) !!}
+    <div class="form-group has-label">
+      <label>State
+        <star class="star">*</star>
+      </label>
+      {{ Form::select('state', array('johor' => 'Johor', 'Kedah' => 'Kedah', 'Kelantan' => 'Kelantan', 'KL' => 'KL', 'Melaka' => 'Melaka', 'Pahang' => 'Pahang', 'Penang' => 'Penang', 'Perak' => 'Perak', 'Perlis' => 'Perlis', 'Sabah' => 'Sabah', 'Sarawak' => 'Sarawak', 'Selangor' => 'Selangor', 'Terengganu' => 'Terengganu'), null, ['class' =>  'required']) }}
+    </div>
+     <div class="form-group has-label">
+      <label>Type
+        <star class="star">*</star>
+      </label>
+      {{ Form::select('type', array('None' => 'None', 'Cultural' => 'Cultural', 'Adventurous' => 'Adventurous', 'Food' => 'Food', 'Relaxation' => 'Relaxation', 'Shopping' => 'Shopping', 'SightSeeing' => 'SightSeeing'), null, ['class' => 'required']) }}
+    </div>
+    
+      <button type="submit" class="btn btn-info btn-fill btn-wd">Apply filter</button>
+    
+
+  {!! Form::close() !!}
+</div>
+
+{{--<div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Pick a state
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{ route('galleryPenang' )}}">Penang</a>
+    <a class="dropdown-item" href="#">Penang</a>
     <a class="dropdown-item" href="#">Perak</a>
     <a class="dropdown-item" href="#">Perlis</a>
     <a class="dropdown-item" href="#">Kedah</a>
     <a class="dropdown-item" href="#">Johor</a>
     <a class="dropdown-item" href="#">Melaka</a>
-    <a class="dropdown-item" href="{{ route('gallerySelangor') }}">Selangor</a>
+    <a class="dropdown-item" href="#">Selangor</a>
     <a class="dropdown-item" href="#">Kuala Lumpur</a>
     <a class="dropdown-item" href="#">Sabah</a>
     <a class="dropdown-item" href="#">Sarawak</a>
@@ -100,12 +123,12 @@ Gallery
     Activity Type
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{ route('galleryPenangSightSeeing') }}">Sight Seeing</a>
+    <a class="dropdown-item" href="#">Sight Seeing</a>
     <a class="dropdown-item" href="#">Relaxation</a>
     <a class="dropdown-item" href="#">Cultural</a>
     <a class="dropdown-item" href="#">Adventurous</a>
   </div><br>
-</div>
+</div>--}}
 
 
 </body>
@@ -114,20 +137,20 @@ Gallery
 
 <!-- About Page -->
 <div class="gallery__page">
-    <div class="gallery__warp">
-      <div class="row">
-        @foreach($destinations as $destination)
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
-            <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
-            Name: {{ $destination->name }}<br>
-            Description: {{ $destination->description}}
-          </a>
-        </div>
-        @endforeach
+  <div class="gallery__warp">
+    <div class="row">
+      @foreach($destinations as $destination)
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
+          <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
+          Name: {{ $destination->name }}<br>
+          Description: {{ $destination->description}}
+        </a>
       </div>
+      @endforeach
     </div>
   </div>
+</div>
   <!-- About Page end -->
 </body>
 @endsection('content')

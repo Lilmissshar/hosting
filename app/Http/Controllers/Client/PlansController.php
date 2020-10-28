@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Plan;
 use App\Destination;
 use App\Plan_destination;
+use App\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Client\PlansService;
@@ -36,18 +37,24 @@ class PlansController extends Controller
     }
 
     public function edit(Plan $plan){
+        // dd($plan->reviews);
 
-        Session::put('plan', $plan);
+        // Session::put('plan', $plan);
+
+        $planDest = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->paginate(10);
+
+
+        return view($this->path . 'editting', ['planDest' => $planDest]);
         
-        return redirect()->route('editDay');
+        // return redirect()->route('editDay');
        
     }
 
-    public function editDay(Plan $plan, Request $request){
-        $plan = Session::get('plan');
-        $planDest = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->get();
+    // public function editDay(Plan $plan, Request $request){
+    //     $plan = Session::get('plan');
+    //     $planDest = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->get();
 
-        return view($this->path . 'editting', ['planDest' => $planDest]);   
+    //     return view($this->path . 'editting', ['planDest' => $planDest]);   
 
         // $ar = array();
         // foreach ($planDest as $p){
@@ -117,14 +124,14 @@ class PlansController extends Controller
 
              
 
-    }
+    // }
 
-    public function editDestinations(){
+    // public function editDestinations(){
        
-       $choices = session()->get('choices');
+    //    $choices = session()->get('choices');
 
-        return view($this->path . 'edit', ['choices' => $choices]);
-    }
+    //     return view($this->path . 'edit', ['choices' => $choices]);
+    // }
 
 
 
@@ -135,38 +142,51 @@ class PlansController extends Controller
         Session::put('id', $id);
 
         $choices = Destination::where('id', '!=', $q->destination_id)->get();
-       
-       return redirect()->route('editDestinations')->with(['choices' => $choices]);
+
+        return view($this->path . 'edit', ['choices' => $choices]);
+       // return redirect()->route('editDestinations')->with(['choices' => $choices]);
 
 
 
     }
 
+    public function filterEditSpecifics(Request $request){
+
+        $state = $request->state;
+        $type = $request->type;
+
+        $id = Session::get('id');
+
+        $q = Plan_destination::where('id', $id)->first();
+
+        if ($type == 'None'){
+            $filter = Destination::where('id', '!=', $q->destination_id)->where('state', $state)->get();
+        } else {
+            $filter = Destination::where('id', '!=', $q->destination_id)->where('state', $state)->where('type', $type)->get();
+        }
+
+        return view($this->path . 'filterEdit', ['choices' => $filter]);
+    }
+
     public function chosen(Request $request){
+        // dd($request);
         
         $id = Session::get('id');
 
         $chosenDestinations = $request->destination;
 
         
-        $validator = Validator::make($request->all(), [
-        'destination' => 'min:1|max:1'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        // 'destination' => 'min:1|max:1'
+        // ]);
 
-        if (!empty($chosenDestinations)){
-            if ($validator->fails()) {
-            return response()->json('You must enter 1 choice only', 422);
-            }
-        } else {
-        return response()->json('Cannot be empty', 422);
-        }
 
-        if ($validator->fails()) {
-            return response()->json('You must enter 1 choice only', 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json("You haven't entered a destination", 422);
+        // }
 
         $data = Plan_destination::find($id);
-        $data->destination_id = $chosenDestinations[0];
+        $data->destination_id = $chosenDestinations;
         $data->save();
 
         
@@ -174,17 +194,84 @@ class PlansController extends Controller
 
     }
 
-    public function editAdd(){
+    public function editAdd($id){
 
-        Destination::all();
+        $plans = Plan_destination::where('plan_id', $id)->get();
 
-        return view($this->path . 'addNew');
+        $day = array();
+
+        foreach ($plans as $plan){
+            $day[] = $plan->day;
+        }
+
+        $unique = array_unique($day);
+        $uni = array();
+        foreach ($unique as $u){
+            $uni[] = $u;
+        }
+
+        $destinations = Destination::all();
+        
+
+        return view($this->path . 'addNew', ['destinations' => $destinations, 'unique' => $uni, 'plan_id' => $id ]);
     }
 
-  public function storeEditAdd(){
+    public function filterAdd(Request $request, $plan_id){
+
+        $plans = Plan_destination::where('plan_id', $plan_id)->get();
+
+        $day = array();
+
+        foreach ($plans as $plan){
+            $day[] = $plan->day;
+        }
+
+        $unique = array_unique($day);
+        $uni = array();
+        foreach ($unique as $u){
+            $uni[] = $u;
+        }
+
+        $state = $request->state;
+        $type = $request->type;
+
+        $id = Session::get('id');
+
+        $q = Plan_destination::where('id', $id)->first();
+
+        if ($type == 'None'){
+            $filter = Destination::where('id', '!=', $q->destination_id)->where('state', $state)->get();
+        } else {
+            $filter = Destination::where('id', '!=', $q->destination_id)->where('state', $state)->where('type', $type)->get();
+        }
+
+        return view($this->path . 'filterAddNew', ['destinations' => $filter, 'unique' => $uni, 'plan_id' => $plan_id ]);
+
+    }
 
 
-  }
+    public function storeEditAdd(Request $request, $plan_id){
+
+        
+        $day = $request->day + 1;
+
+        $des = array();
+        foreach ($request->destination as $dest){
+            $des[] = $dest;
+        }
+
+        foreach ($request->destination as $dest_id){
+            $planDest = new Plan_destination();
+            $planDest->plan_id = $plan_id;
+            $planDest->destination_id = $dest_id;
+            $planDest->day = $day;
+            $planDest->save();
+        }
+
+        return redirect()->route('plans.index');
+        
+
+    }
 
 
 

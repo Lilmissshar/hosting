@@ -2,6 +2,7 @@
 @extends('layouts.client.master')
 
 @section('content')
+AddNew
 <!-- Page Preloder -->
 <div id="preloder">
   <div class="loader"></div>
@@ -42,7 +43,7 @@
               @else
               <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                   <div class="header__switches">
-                    <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
+                  	<a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
                       <a class="nav-link" href="{{route('client.account.show')}}">
                         <i class="fa fa-cog"></i> Settings
                       </a>
@@ -70,42 +71,39 @@
   </header>
   <br><br>
   <!-- Header Section end -->
- <?php
-$i = 0;
-?>
-  <div class="card bootstrap-table">
-    <div class="card-body table-full-width">
-      <div class="toolbar">
-      </div>
-      <table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Day</th>
-      <th>Dest</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-    @foreach ($planDest as $plan)
-      <tr>
-       
-        <td>{{ $planDest->firstItem() + $i++ }}</td>
-        <td>{{ $plan->day }}</td>
-        <td>{{ \App\Destination::where(['id' => $plan->destination_id])->pluck('name')->first() }}</td>
-        <td><a href="{{ route('editSpecifics', $plan->id) }}">Edit</a></td>
-        <td><a href="">Delete</a></td>
-        
-        
-      </tr> 
-    @endforeach
-  </table>
-  <div class="d-flex">
-        <div class="mx-auto">
-          {{ $planDest->links() }}
+<body>
+ <a href="#">Go back</a>
+
+ {!! Form::open(['route' => ['storeEditAdd', $plan_id], 'class' => 'form', 'id' => 'form-validation']) !!}
+
+ <div class="form-group has-label">
+    <label>Choose the day you want to add this destination to
+      <star class="star">*</star>
+    </label>
+      {{ Form::select('day', $unique, null, ['class' => 'required']) }}
+  </div>
+
+  <div class="gallery__page">
+    <div class="gallery__warp">
+      <div class="row">
+
+          @foreach($destinations as $destination)
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
+            <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
+            Name: {{ $destination->name }}<br>
+            Description: {{ $destination->description}}
+          </a>
+          <input class="single-checkbox" type="checkbox" name="destination[]" value="{{ $destination->id }}">
         </div>
+        @endforeach
       </div>
+      <div class="card-footer text-right">
+          <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+        </div>
+        {!! Form::close() !!}
     </div>
   </div>
-@endsection
 
+</body>
+@endsection

@@ -73,7 +73,6 @@ $i = 0;
         </div>
     </header>
     <!-- Header Section end -->
-
 <div class="card bootstrap-table">
     <div class="card-body table-full-width">
       <div class="toolbar">
@@ -86,6 +85,8 @@ $i = 0;
           <th>End Date</th>
           <th>Destination</th>
           <th>Edit</th>
+          <th>Review</th>
+          <th>Add more destinations</th>
         </thead>
         @foreach ($plans as $plan)
           <tr>
@@ -95,7 +96,14 @@ $i = 0;
             <td>{{ $plan['end_date'] }}</td>
             <td>{{ $plan['destinations'] }}</td>
             
-            <td><a href="{{ route('plans.edit', $plan['id'])  }}">Edit</a></td>
+            <td><a href="{{ route('plans.edit', $plan['id']) }}">Edit</a></td>
+            @if ($plan['reviews'] != null)
+            <td>{{ $plan['reviews'] }}</td>
+            @else
+             <td><a href="{{ route('reviews.index', $plan['id'])  }}">Add a review</a></td>
+            @endif
+
+            <td><a href="{{ route('editAdd', $plan['id']) }}">Add</a>
           </tr> 
         @endforeach
       </table>

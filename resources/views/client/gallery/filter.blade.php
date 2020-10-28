@@ -1,8 +1,7 @@
 @extends('layouts.client.master') 
 
 @section('content')
-
-EditDestinations
+Gallery
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -37,7 +36,7 @@ EditDestinations
                         <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
-                @elseif (current_user()->role == '1')
+                @elseif (current_user()->id == '1')
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
@@ -62,7 +61,7 @@ EditDestinations
                 <ul class="nav__menu">
                     <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
                     <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
-                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                   <li><a class="menu--active" href="{{ route('gallery') }}">Gallery</a></li>
                     {{--<li><a href="./blog.html">Blog</a>
                         <ul class="sub__menu">
                             <li><a href="./blog-single.html">Blog Single</a></li>
@@ -74,54 +73,28 @@ EditDestinations
         </div>
     </header>
   <!-- Header Section end -->
+<a href="{{ route('gallery') }}">Go back</a>
 
-<body>
-<div>
-  <label>Wanna apply a filter?</label><br><br>
-    {!! Form::open(['route' => 'filterEditSpecifics', 'class' => 'form', 'id' => 'form-validation']) !!}
-    <div class="form-group has-label">
-      <label>State
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('state', array('johor' => 'Johor', 'Kedah' => 'Kedah', 'Kelantan' => 'Kelantan', 'KL' => 'KL', 'Melaka' => 'Melaka', 'Pahang' => 'Pahang', 'Penang' => 'Penang', 'Perak' => 'Perak', 'Perlis' => 'Perlis', 'Sabah' => 'Sabah', 'Sarawak' => 'Sarawak', 'Selangor' => 'Selangor', 'Terengganu' => 'Terengganu'), null, ['class' =>  'required']) }}
-    </div>
-     <div class="form-group has-label">
-      <label>Type
-        <star class="star">*</star>
-      </label>
-      {{ Form::select('type', array('None' => 'None', 'Cultural' => 'Cultural', 'Adventurous' => 'Adventurous', 'Food' => 'Food', 'Relaxation' => 'Relaxation', 'Shopping' => 'Shopping', 'SightSeeing' => 'SightSeeing'), null, ['class' => 'required']) }}
-    </div>
-    
-      <button type="submit" class="btn btn-info btn-fill btn-wd">Apply filter</button>
-    
+{{--<gallery-component prop-destinations="{{ $destinations }}"></gallery-component>--}}
 
-  {!! Form::close() !!}
-</div>
-
-   {!! Form::open(['route' => 'chosen', 'class' => 'form', 'id' => 'form-validation']) !!}
-  <div class="gallery__page">
-    <div class="gallery__warp">
-      <div class="row">
-        @foreach($choices as $destination)
-        <div class="col-lg-3 col-md-4 col-sm-6">
-          <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
-            <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
-            Name: {{ $destination->name }}<br>
-            Description: {{ $destination->description}}
-          </a>
-          {{ Form::radio('destination', $destination->id, true)}}
-          {{--<input class="single-checkbox" type="checkbox" name="destination[]" value="{{ $destination->id }}">--}}
-        </div>
-        @endforeach
+<!-- About Page -->
+<div class="gallery__page">
+  <div class="gallery__warp">
+    <div class="row">
+      @foreach($destinations as $destination)
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="gallery__item fresco" href="{{ asset('images/destinations/' . $destination->picture) }}" data-fresco-group="gallery">
+          <img src="{{ asset('images/destinations/' . $destination->picture) }}" alt="image" width="500" height="375">
+          Name: {{ $destination->name }}<br>
+          Description: {{ $destination->description}}
+        </a>
       </div>
-      <div class="card-footer text-right">
-          <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
-        </div>
-        {!! Form::close() !!}
+      @endforeach
     </div>
   </div>
+</div>
+  <!-- About Page end -->
 </body>
-
-@endsection
+@endsection('content')
 
 
