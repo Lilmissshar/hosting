@@ -30,20 +30,6 @@ Route::prefix('admin')->group(function(){
 		//dashboard
 		Route::get('dashboard','Admin\DashboardController@dashboard')->name('dashboard');
 
-		//create, delete, and view all Admins team
-		// Route::resource('teams', 'Admin\TeamsController', ['only' => ['index', 'create', 'store', 'destroy']]);
-
-		// //view customer feedbacks
-		// Route::resource('forms', 'Admin\FormsController', ['only' => ['index', 'show']]);
-
-		// //Museum, create, delete, view, edit
-		// Route::resource('museums', 'Admin\MuseumsController');
-		// //resource creates the create, delete, view, edit, show, update
-
-		//delete and view all Users ( client )
-		// Route::resource('clients', 'Admin\TeamsController', ['only' => ['index', 'destroy']]);
-		//the only is to specify that only the index and the delete is created, the others are not created
-
 		Route::get('logout', 'Admin\AuthController@logout')->name('admin.logout');
 
 		//Settings
@@ -84,15 +70,6 @@ Route::prefix('admin')->group(function(){
 	});
 });
 
-//Client Routes
-Route::get('form', 'Client\FormsController@showForm')->name('form.show');
-Route::post('form', 'Client\FormsController@submitForm')->name('form.store');
-
-Route::get('admin/museums/{museum}/edit', 'Admin\MuseumsController@edit')->name('museums.edit');
- Route::put('admin/museums/{museum}/update', 'Admin\MuseumsController@update')->name('museums.update');
-
- Route::post('museums', 'Client\MuseumsController@index')->name('client.museums.index');
- //museums is the url, which is used in the component script js part to link it to show the information of the museums aka the museumsName
 
 //Client authentication
 Route::get('clientRegister', 'Client\AuthController@viewRegister')->name('client.register.show');
@@ -149,18 +126,3 @@ Route::get('/review.create', 'Client\ReviewsController@create')->name('reviews.c
 // Route::resource('reviews', 'Client\ReviewsController');
 
 //first one is the url, the second one is which controller it is in charge of, the third one name, is the name of the route(like a short formed version)
-
-
-//testing routes
-Route::get('/test', function () {
-    return view('welcome');
-});
-
-Route::get('/test2', function() {
-
-	return view('test');
-});
-Route::get('/test3', function() {
-
-	return view('test2');
-});
