@@ -26,7 +26,6 @@ class RecommendationsController extends Controller {
 
 	public function saveDate(Request $request){
 
-
 		$start = Carbon::parse($request->start_date);
 		$end = Carbon::parse($request->end_date);
 	    $diff = $start->diffInDays($end);
@@ -35,6 +34,7 @@ class RecommendationsController extends Controller {
 	    Session::put('name', $request->name);
 	    Session::put('startDate', $request->start_date);
 	    Session::put('endDate', $request->end_date);
+	    Session::put('number', $request->number);
 
 		// $data = [
 		// 	'startDate' => $request->startDate,
@@ -55,17 +55,23 @@ class RecommendationsController extends Controller {
 		// Session::put('state', $request->state);
 		Session::put('category', $request->category);
 
-		$destinations = Destination::where('state', $request->state)->whereHas('category', function($destinations) {
+		// Session::put('destinations', $destinations);
+		
+		if ($request->type == 'None'){
+			$destinations = Destination::where('state', $request->state)->whereHas('category', function($destinations) {
 			$destinations->where('category_id', Session::get('category'));
 		})->get();
-
-		Session::put('destinations', $destinations);
-		
-
+		} else {
+			$destinations = Destination::where('state', $request->state)->where('type', $request->type)->whereHas('category', function($destinations) {
+			$destinations->where('category_id', Session::get('category'));
+		})->get();
+		}
 		// if ($request->wantsJson()) {
 	 //      return route('test', $data);
 	 //    }
-		return redirect()->route('showDestinations')->with('destinations', $destinations);
+		
+		return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
+		// return redirect()->route('showDestinations')->with('destinations', $destinations);
 	    // return view($this->path . 'recommendedDestinations', compact('destinations'));
 		// 	Session::put('startDate', $request->startDate);
 
@@ -74,7 +80,6 @@ class RecommendationsController extends Controller {
 	public function showDestinations(){
 
 		$destinations = Session::get('destinations');
-
 
 		return view($this->path . 'recommendedDestinations', ['destinations' => $destinations]);
 
@@ -109,7 +114,7 @@ class RecommendationsController extends Controller {
 		}
 
 
-		$keyss = array();
+		$keyss = array(); //contains the keywords information based on the chosen destinations. 
 
 		foreach ($chosens as $keyword){
 
@@ -121,7 +126,7 @@ class RecommendationsController extends Controller {
 
 		}
 		
-		$keyWords = array();
+		$keyWords = array(); //get the keywords based on the matching ids from the destinations
 		// $keyWordsId = array();
 		foreach ($keyss as $key){
 			$key = Keyword::where('id', $key)->get();
@@ -133,12 +138,12 @@ class RecommendationsController extends Controller {
 
 		// dd($keyWordsId);
 		// dd($keyWords);
-		$totalCount = count($keyWords);
+		$totalCount = count($keyWords); //count how many keywords are found
 		// dd($totalCount);
-		$wordCount = array_count_values($keyWords);
-		arsort($wordCount);
+		$wordCount = array_count_values($keyWords); //count the values of each keywords
+		arsort($wordCount); //sort the most appeared keywords in ascending orders
 		// dd($wordCount);
-		$count = array_splice($wordCount, 0, 10);
+		$count = array_splice($wordCount, 0, 10); //take the top 10 most appeared keywords
 
 		$highCount = array();
 		foreach ($count as $key => $val) {
@@ -150,7 +155,7 @@ class RecommendationsController extends Controller {
 
 		// dd($highCount);
 
-		$test = array();
+		$test = array(); //get the name of the keywords in the top 10 list.
 		
 		foreach ($highCount as $high) {
 			$find = Keyword::where('name', $high)->get();
@@ -158,11 +163,11 @@ class RecommendationsController extends Controller {
 			
 			foreach ($find as $f){
 				// echo "$f->id\n";
-				$get = KeywordDestination::where('keyword_id', $f->id)->get();
+				$get = KeywordDestination::where('keyword_id', $f->id)->get(); //get the matching destinations with these top 10 keywords
 
 				foreach ($get as $t){
 					// echo "$t->destination_id\n";
-					$d = Destination::where('id', $t->destination_id)->get();
+					$d = Destination::where('id', $t->destination_id)->get(); //get the destinations that match the keywords
 					// echo $d;
 				
 
@@ -177,13 +182,14 @@ class RecommendationsController extends Controller {
 				
 		}
 		
-		$u = array_unique($test);
-		$val = count($u);
+		$u = array_unique($test); //get only the unique keywords as there could be duplicates
+		$val = count($u); //count the number of destinations found
 		
-		$diff = Session::get('diff');
+		$diff = Session::get('diff'); //difference between the start date and end date
 
-		$days = array_chunk($u, 3);
-		$final = array_splice($days, 0, $diff);
+		$number = Session::get('number');
+		$days = array_chunk($u, $number); //chunk the list into groups of 3
+		$final = array_splice($days, 0, $diff); //separate the list into how many days based on the diff
 
 		Session::put('recommendations', $final);
 

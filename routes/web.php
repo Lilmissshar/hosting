@@ -136,6 +136,8 @@ Route::post('/filterEditSpecifics', 'Client\PlansController@filterEditSpecifics'
 Route::get('/addNew/{id}', 'Client\PlansController@editAdd')->name('editAdd');
 Route::post('/filterAdd{plan_id}', 'Client\PlansController@filterAdd')->name('filterAdd');
 Route::post('/add/{plan_id}', 'Client\PlansController@storeEditAdd')->name('storeEditAdd');
+Route::get('plan/{id}', 'Client\PlansController@deletePlan')->name('deletePlan');
+Route::get('day/{id}', 'Client\PlansController@deleteDay')->name('deleteDay');
 
 
 Route::resource('dests', 'Client\DestinationsController');

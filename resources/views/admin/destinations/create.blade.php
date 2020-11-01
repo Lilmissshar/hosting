@@ -34,7 +34,7 @@
           <label>Type
             <star class="star">*</star>
           </label>
-          {{ Form::select('type', array(Activity' => 'Activity', 'Sight-see' => 'Sight Seeing', 'Accomodation' => 'Accomodation'), null, ['class' => 'form-control', 'required']) }}
+          {{ Form::select('type', array('Cultural' => 'Cultural', 'Adventurous' => 'Adventurous', 'Food' => 'Food', 'Relaxation' => 'Relaxation', 'Shopping' => 'Shopping', 'SightSeeing' => 'SightSeeing'), null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>Picture Name

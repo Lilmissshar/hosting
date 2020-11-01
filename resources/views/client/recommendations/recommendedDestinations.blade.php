@@ -1,7 +1,6 @@
 @extends('layouts.client.master') 
 
 @section('content')
-RecommendedDestinations
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -12,8 +11,8 @@ RecommendedDestinations
     <div class="loader"></div>
   </div>
 
-  <!-- Header Section -->
-  <header class="header">
+ <!-- Header Section -->
+<header class="header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4 col-md-3 order-2 order-sm-1">
@@ -36,7 +35,7 @@ RecommendedDestinations
                         <a href="{{ route('client.login.show') }}"><i class="fa fa-user-circle fa-7x"></i></a>
                     </div>
                 </div>
-                @elseif (current_user()->role == '1')
+                @elseif (current_user()->id == '1')
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
                         <a href="#" class="search-switch"><i class="fa fa-search"></i></a>
@@ -47,6 +46,7 @@ RecommendedDestinations
                 @else
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
+                        <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Plans</a>
                         <a class="nav-link" href="{{route('client.account.show')}}">
                           <i class="fa fa-cog"></i> Settings
                         </a>
@@ -57,24 +57,39 @@ RecommendedDestinations
                 </div>
                 @endif
             </div>
+            @if(!current_user())
+            <nav class="main__menu">
+                <ul class="nav__menu">
+                    <li><a href="{{ route('home') }}" class="menu--active">Home</a></li>
+                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                   <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
+                </ul>
+            </nav>
+            @elseif (current_user()->id == '1')
+            <nav class="main__menu">
+                <ul class="nav__menu">
+                    <li><a href="{{ route('home') }}" class="menu--active">Home</a></li>
+                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+                   <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
+                </ul>
+            </nav>
+            @else
             <nav class="main__menu">
                 <ul class="nav__menu">
                     <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
-                    <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
+                    <li><a class="menu--active" href="{{ route('datepicker') }}">Recommendation</a></li>
                    <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
-                    {{--<li><a href="./blog.html">Blog</a>
-                        <ul class="sub__menu">
-                            <li><a href="./blog-single.html">Blog Single</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="./contact.html">Contact</a></li>--}}
+                   <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
                 </ul>
             </nav>
+            @endif
         </div>
     </header>
-  <!-- Header Section end -->
+    <!-- Header Section end -->
 
 <body>
+  <br><br>
+  <center><p>Choose 3-6 places based on your preference</p></center>
    {!! Form::open(['route' => 'saveChosenDestinations', 'class' => 'form', 'id' => 'form-validation']) !!}
   <div class="gallery__page">
     <div class="gallery__warp">

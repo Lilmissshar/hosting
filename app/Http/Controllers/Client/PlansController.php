@@ -42,7 +42,7 @@ class PlansController extends Controller
         // Session::put('plan', $plan);
 
         $planDest = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->paginate(10);
-
+        Session::put('plan', $plan);
 
         return view($this->path . 'editting', ['planDest' => $planDest]);
         
@@ -137,13 +137,17 @@ class PlansController extends Controller
 
     public function editSpecifics($id){
 
+        $plan = Session::get('plan');
+
         $q = Plan_destination::where('id', $id)->first();
 
         Session::put('id', $id);
 
+        $plan = Plan_destination::where('plan_id', $plan->id)->orderBy('day')->get();
+
         $choices = Destination::where('id', '!=', $q->destination_id)->get();
 
-        return view($this->path . 'edit', ['choices' => $choices]);
+        return view($this->path . 'edit', ['choices' => $choices, 'plan' => $plan]);
        // return redirect()->route('editDestinations')->with(['choices' => $choices]);
 
 
@@ -273,6 +277,22 @@ class PlansController extends Controller
 
     }
 
+    public function deletePlan($id){
+
+        $plan = Plan::where('id', $id)->delete();
+
+        return redirect()->route('plans.index');
+
+
+    }
+
+    public function deleteDay($id){
+
+        $planDest = Plan_destination::where('id', $id)->delete();
+
+        return redirect()->route('plans.index');
+
+    }
 
 
     // public function edit(Plan $plan) {

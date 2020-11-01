@@ -3,127 +3,59 @@
 namespace App\Http\Controllers\Client;
 
 use App\Destination;
-use App\Categories;
+use App\Destination_category;
+use App\KeywordDestination;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Client\DestinationsService; 
-use Excel;
 
 class DestinationsController extends Controller
 {
-    protected $path = 'admin.destinations.';
-    protected $destinationsService;
+    protected $path = 'client.destinations.';
 
-    public function __construct(DestinationsService $destinationsService){
-        $this->destinationService = $destinationsService;
-      } 
 
-    public function index(Request $request){
-    if ($request->wantsJson()) {
-      return $this->destinationService->all($request);
+    public function index(Request $request){  
+        return view($this->path . 'index');
     }
-    return view($this->path . 'index');
-  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {   
-        return view($this->path . 'create');
-    }
-    
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request){
-        return $this->destinationService->store($request);
-    }
-        
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Museum  $museum
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Destination $destination){
-        
-        $categories = $destination->category;
-        $keywords = $destination->keywords;
-        return view($this->path . 'edit', ['destination' => $destination, 'categories' => $categories, 'keywords' => $keywords ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Museum  $museum
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Destination $destination) {
-        return $this->destinationService->update($request, $destination);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Museum  $museum
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Destination $destination)
-    {
-        $destination->delete();
-
-        return success();
-    }
-
-    public function importExport(){
-        return view ($this->path . 'importExport');
-    }
-
-    public function downloadExcel($type){
-
-        $data = Destination::get()->toArray();
-
-        return Excel::create('destination_database', function($excel) use ($data) {
-            $excel->sheet('mySheet', function($sheet) use ($data)
-            {
-                $sheet->fromArray($data);
-            });
-        })->download($type);
-    }
-
-    public function importExcel(Request $request)
-    {
-        $request->validate([
-            'import_file' => 'required'
+        $data = $request->validate([
+            'name' => "required",
+            'description' => "required",
+            "state" => "required",
+            "type" => "required"
         ]);
- 
-        $path = $request->file('import_file')->getRealPath();
-        $data = Excel::load($path)->get();
- 
-        if($data->count()){
-            foreach ($data as $key => $value) {
-                $arr[] = ['name' => $value->name, 'description' => $value->description, 'state' => $value->state, 'type' => $value->type, 'picture' => $value->picture];
-            }
- 
-            if(!empty($arr)){
-                Destination::insert($arr);
-            }
-        }
- 
-        return back()->with('success', 'Insert Record successfully.');
-    }
 
-    public function test(){
-        $categories = Category::latest()->get();
-        return response()->json($users, 200);
-    }
+        $destination = new Destination(); 
+        $destination->name = $request->name;
+        $destination->description = $request->description;
+        $destination->state = $request->state;
+        $destination->type = $request->type;
+
+        if ($request->file('image')){
+            $imageName = $request->pictureName . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('images/destinations'), $imageName);
+            $destination->picture = $imageName;
+            $destination->save();
+        } else {
+            $destination->save();
+        }
+
+
+        foreach($request->category_id as $id){
+            $destinationCategory = new Destination_category();
+            $destinationCategory->destination_id = $destination->id;
+            $destinationCategory->category_id = $id;
+            $destinationCategory->save();
+        }
+
+        foreach($request->keyword_id as $kid){
+            $keywordCategory = new KeywordDestination();
+            $keywordCategory->destination_id = $destination->id;
+            $keywordCategory->keyword_id = $id;
+            $keywordCategory->save();
+        }
+
+        return redirect()->route('home');
+     }
+    
 }

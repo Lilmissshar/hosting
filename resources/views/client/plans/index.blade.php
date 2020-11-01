@@ -46,7 +46,7 @@ $i = 0;
                 @else
                 <div class="col-sm-4 col-md-3 order-1 order-sm-3">
                     <div class="header__switches">
-                        <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Your saved plans</a>
+                        <a href="{{ route('plans.index') }}"><i class="fa fa-tasks"></i> Plans</a>
                         <a class="nav-link" href="{{route('client.account.show')}}">
                           <i class="fa fa-cog"></i> Settings
                         </a>
@@ -57,19 +57,32 @@ $i = 0;
                 </div>
                 @endif
             </div>
-            <nav class="main__menu">
-                <ul class="nav__menu">
-                    <li><a href="{{ route('home') }}" class="menu--active">Home</a></li>
-                    <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
-                   <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
-                    {{--<li><a href="./blog.html">Blog</a>
-                        <ul class="sub__menu">
-                            <li><a href="./blog-single.html">Blog Single</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="./contact.html">Contact</a></li>--}}
-                </ul>
-            </nav>
+            @if(!current_user())
+        <nav class="main__menu">
+            <ul class="nav__menu">
+                <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
+               <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+               <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
+            </ul>
+        </nav>
+        @elseif (current_user()->id == '1')
+        <nav class="main__menu">
+            <ul class="nav__menu">
+                <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
+               <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+               <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
+            </ul>
+        </nav>
+        @else
+        <nav class="main__menu">
+            <ul class="nav__menu">
+                <li><a href="{{ route('home') }}" class="nav-link">Home</a></li>
+                <li><a class="nav-link" href="{{ route('datepicker') }}">Recommendation</a></li>
+               <li><a class="nav-link" href="{{ route('gallery') }}">Gallery</a></li>
+               <li><a class="nav-link" href="{{ route('dests.index') }}">Add a destination</a></li>
+            </ul>
+        </nav>
+        @endif
         </div>
     </header>
     <!-- Header Section end -->
@@ -77,7 +90,7 @@ $i = 0;
     <div class="card-body table-full-width">
       <div class="toolbar">
       </div>
-      <table id="bootstrap-table" class="table">
+      <table id="bootstrap-table" class="table table-striped">
         <thead class="thead-dark">
           <th>ID</th>
           <th>Name</th>
@@ -86,7 +99,8 @@ $i = 0;
           <th>Destination</th>
           <th>Edit</th>
           <th>Review</th>
-          <th>Add more destinations</th>
+          <th>Add</th>
+          <th>Delete</th>
         </thead>
         @foreach ($plans as $plan)
           <tr>
@@ -104,6 +118,7 @@ $i = 0;
             @endif
 
             <td><a href="{{ route('editAdd', $plan['id']) }}">Add</a>
+            <td><a href="{{ route('deletePlan', $plan['id']) }}">Delete</a>
           </tr> 
         @endforeach
       </table>
